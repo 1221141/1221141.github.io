@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  How to always open the editor in the classic editor
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/blog">&#47;blog&#47;</a>
+  
+  <a href="/tags/wordpress">&#47;wordpress&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-15T13:27:36</strong></p>
+<p>In WordPress there are two editors, the Classic one and the Block one.<br />
+When I am at the computer I like to use the classic editor (one of the few plugins I have). But when I'm on my phone I use the android app, and that uses the block editor.</p>
+<h2 id="the-problem">The problem</h2>
+<p>If I create a post on my phone and try to open in the computer it will open in the block editor. Unless I specific click ("edit with classic editor")</p>
+<h2 id="solution">Solution</h2>
+<p>Add a function and a hook in the theme <code>functions.php</code></p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>
+</span><span>function add_classic_editor_forget_parameter() {
+</span><span>    // Check if we are on the post edit screen
+</span><span>    if (is_admin() &amp;&amp; isset($_GET[&#39;post&#39;]) &amp;&amp; get_post_type($_GET[&#39;post&#39;]) === &#39;post&#39;) {
+</span><span>        // Enqueue jQuery
+</span><span>        wp_enqueue_script(&#39;jquery&#39;);
+</span><span>
+</span><span>
+</span><span>        // Add a custom script
+</span><span>        wp_add_inline_script(&#39;jquery&#39;, &#39;jQuery(document).ready(function($) {
+</span><span>            var currentUrl = window.location.href;
+</span><span>
+</span><span>
+</span><span>            // Check if the classic-editor__forget parameter is not already present
+</span><span>            if (currentUrl.indexOf(&quot;classic-editor__forget&quot;) === -1) {
+</span><span>                // Add the parameter to the URL
+</span><span>                var newUrl = currentUrl + &quot;&amp;classic-editor__forget&quot;;
+</span><span>
+</span><span>
+</span><span>                // Redirect to the new URL
+</span><span>                window.location.href = newUrl;
+</span><span>            }
+</span><span>        });&#39;);
+</span><span>    }
+</span><span>}
+</span><span>add_action(&#39;admin_enqueue_scripts&#39;, &#39;add_classic_editor_forget_parameter&#39;);
+</span></code></pre>
+<p>This way, every time I open a post to edit it will open in the classic editor.``</p>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Programmatically creating a WordPress page
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/ideas">&#47;ideas&#47;</a>
+  
+  <a href="/tags/notes">&#47;notes&#47;</a>
+  
+  <a href="/tags/wordpress">&#47;wordpress&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-04T23:53:25</strong></p>
+<p>I recently learned that WordPress provides a JSON API. This way I could consume and also post new content via API.</p>
+<p>Might want to investigate this to help me when I want to track movies that I watched. Maybe a bookmarklet from IMDb or tmdb that would create the page for me.</p>
+<p>Example in this video:</p>
+<p>https://youtu.be/_w4Ok-lI48g?si=hA9iUsj2z2oAjh6w</p>
+<hr />
+<p>I found another way to do that.</p>
+<ol>
+<li>add a php file in the wordpress root</li>
+<li>this file is now available as wp-ip/file.php</li>
+<li>pass the parameters in a get request and use the <code>wp_insert_post</code> to create a post programatically.</li>
+<li>might be more unsafe, but ok for a offline blog.</li>
+</ol>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - read</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/read/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-02-12T11:32:15+00:00</updated>
+    <id>https://1221141.github.io/tags/read/atom.xml</id>
+    <entry xml:lang="en">
+        <title>The T-Shaped Engineer | Alex Kondov - Software Engineer</title>
+        <published>2024-02-12T11:32:15+00:00</published>
+        <updated>2024-02-12T11:32:15+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240212113215-the-t-shaped-engineer-alex-kondov-software-engineer/"/>
+        <id>https://1221141.github.io/blog/20240212113215-the-t-shaped-engineer-alex-kondov-software-engineer/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240212113215-the-t-shaped-engineer-alex-kondov-software-engineer/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;alexkondov.com&#x2F;the-t-shaped-engineer&#x2F;&quot;&gt;https:&#x2F;&#x2F;alexkondov.com&#x2F;the-t-shaped-engineer&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

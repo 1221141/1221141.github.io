@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - microformat</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/microformat/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-01-19T13:14:00+00:00</updated>
+    <id>https://1221141.github.io/tags/microformat/atom.xml</id>
+    <entry xml:lang="en">
+        <title>scrobble - IndieWeb</title>
+        <published>2024-01-19T13:14:00+00:00</published>
+        <updated>2024-01-19T13:14:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119131400-scrobble-indieweb/"/>
+        <id>https://1221141.github.io/blog/20240119131400-scrobble-indieweb/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119131400-scrobble-indieweb/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;indieweb.org&#x2F;scrobble&quot;&gt;https:&#x2F;&#x2F;indieweb.org&#x2F;scrobble&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

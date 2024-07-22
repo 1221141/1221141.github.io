@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - micropub</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/micropub/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-05-06T16:42:20+00:00</updated>
+    <id>https://1221141.github.io/tags/micropub/atom.xml</id>
+    <entry xml:lang="en">
+        <title>micropub again</title>
+        <published>2024-05-06T16:42:20+00:00</published>
+        <updated>2024-05-06T16:42:20+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240506164220-micropub-again/"/>
+        <id>https://1221141.github.io/blog/20240506164220-micropub-again/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240506164220-micropub-again/">&lt;p&gt;looking into micropub again to get some inspiration on how I should tackle tracking my media with my blog.&lt;br &#x2F;&gt;
+ &lt;br &#x2F;&gt;
+https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=qka8P26ujP0&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>A Brief Intro to My Website Architecture • Aaron Parecki</title>
+        <published>2024-01-19T13:15:19+00:00</published>
+        <updated>2024-01-19T13:15:19+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119131519-a-brief-intro-to-my-website-architecture-aaron-parecki/"/>
+        <id>https://1221141.github.io/blog/20240119131519-a-brief-intro-to-my-website-architecture-aaron-parecki/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119131519-a-brief-intro-to-my-website-architecture-aaron-parecki/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;aaronparecki.com&#x2F;2016&#x2F;12&#x2F;12&#x2F;9&#x2F;my-website&quot;&gt;https:&#x2F;&#x2F;aaronparecki.com&#x2F;2016&#x2F;12&#x2F;12&#x2F;9&#x2F;my-website&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Building a Micropub Server - IndieWebCamp Baltimore 2018 - YouTube</title>
+        <published>2024-01-19T13:14:54+00:00</published>
+        <updated>2024-01-19T13:14:54+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119131454-building-a-micropub-server-indiewebcamp-baltimore-2018-youtube/"/>
+        <id>https://1221141.github.io/blog/20240119131454-building-a-micropub-server-indiewebcamp-baltimore-2018-youtube/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119131454-building-a-micropub-server-indiewebcamp-baltimore-2018-youtube/">&lt;p&gt;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=qka8P26ujP0&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Quickly making watch posts on my website | Chris Aldrich</title>
+        <published>2024-01-19T13:14:30+00:00</published>
+        <updated>2024-01-19T13:14:30+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119131430-quickly-making-watch-posts-on-my-website-chris-aldrich/"/>
+        <id>https://1221141.github.io/blog/20240119131430-quickly-making-watch-posts-on-my-website-chris-aldrich/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119131430-quickly-making-watch-posts-on-my-website-chris-aldrich/">&lt;p&gt;https:&#x2F;&#x2F;boffosocko.com&#x2F;2019&#x2F;06&#x2F;14&#x2F;quickly-making-watch-posts-on-my-website&#x2F;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>scrobble - IndieWeb</title>
+        <published>2024-01-19T13:14:00+00:00</published>
+        <updated>2024-01-19T13:14:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119131400-scrobble-indieweb/"/>
+        <id>https://1221141.github.io/blog/20240119131400-scrobble-indieweb/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119131400-scrobble-indieweb/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;indieweb.org&#x2F;scrobble&quot;&gt;https:&#x2F;&#x2F;indieweb.org&#x2F;scrobble&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Chris Aldrich: Micropub and WordPress: Custom Posting Applications - YouTube</title>
+        <published>2024-01-19T13:12:19+00:00</published>
+        <updated>2024-01-19T13:12:19+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119131219-chris-aldrich-micropub-and-wordpress-custom-posting-applications-youtube/"/>
+        <id>https://1221141.github.io/blog/20240119131219-chris-aldrich-micropub-and-wordpress-custom-posting-applications-youtube/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119131219-chris-aldrich-micropub-and-wordpress-custom-posting-applications-youtube/">&lt;p&gt;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=1fzelLcmglQ&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - note</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/note/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-07-09T20:13:11+00:00</updated>
+    <id>https://1221141.github.io/tags/note/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Watched House of the Dragon S02E04</title>
+        <published>2024-07-09T20:13:11+00:00</published>
+        <updated>2024-07-09T20:13:11+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240709201311-watched-house-of-the-dragon-s02e04/"/>
+        <id>https://1221141.github.io/blog/20240709201311-watched-house-of-the-dragon-s02e04/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240709201311-watched-house-of-the-dragon-s02e04/">&lt;p&gt;\&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>FOAM</title>
+        <published>2024-05-06T12:50:16+00:00</published>
+        <updated>2024-05-06T12:50:16+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240506125016-foam/"/>
+        <id>https://1221141.github.io/blog/20240506125016-foam/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240506125016-foam/">&lt;p&gt;Found about &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;foambubble&#x2F;foam&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;foambubble&#x2F;foam&lt;&#x2F;a&gt;, seems like a nice alternative to obsidian and I can self host with openvscode-server&lt;br &#x2F;&gt;
+ &lt;br &#x2F;&gt;
+template for new post&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;---
+&lt;&#x2F;span&gt;&lt;span&gt;foam_template:
+&lt;&#x2F;span&gt;&lt;span&gt;  filepath: &amp;#39;$FOAM_DATE_YEAR$FOAM_DATE_MONTH$FOAM_DATE_DATE$FOAM_DATE_HOUR$FOAM_DATE_HOUR$FOAM_DATE_MINUTE$FOAM_DATE_SECOND-$FOAM_SLUG.md&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;title: &amp;quot;$FOAM_TITLE&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;created: &amp;quot;$FOAM_DATE_YEAR-$FOAM_DATE_MONTH-$FOAM_DATE_DATE $FOAM_DATE_HOUR:$FOAM_DATE_MINUTE:$FOAM_DATE_SECOND&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;lastmod: &amp;quot;$FOAM_DATE_YEAR-$FOAM_DATE_MONTH-$FOAM_DATE_DATE $FOAM_DATE_HOUR:$FOAM_DATE_MINUTE:$FOAM_DATE_SECOND&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;slug: &amp;quot;$FOAM_SLUG&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;draft: true
+&lt;&#x2F;span&gt;&lt;span&gt;tags:
+&lt;&#x2F;span&gt;&lt;span&gt;  - notes
+&lt;&#x2F;span&gt;&lt;span&gt;---
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt; &lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

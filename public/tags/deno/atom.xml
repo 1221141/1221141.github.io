@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - deno</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/deno/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-04-28T17:18:04+00:00</updated>
+    <id>https://1221141.github.io/tags/deno/atom.xml</id>
+    <entry xml:lang="en">
+        <title>trying deno fresh</title>
+        <published>2024-04-28T17:18:04+00:00</published>
+        <updated>2024-04-28T17:18:04+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240428171804-trying-deno-fresh/"/>
+        <id>https://1221141.github.io/blog/20240428171804-trying-deno-fresh/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240428171804-trying-deno-fresh/">&lt;p&gt;I saw a video about https:&#x2F;&#x2F;deno.fresh.dev and thought it was interesting. Decided to write a bookmark manager for it.&lt;br &#x2F;&gt;
+I started yesterday and was able to write it in a simple way. The main benefit I see compared with sveltekit is that i don&#x27;t need so many files in order to write the endpoint.&lt;br &#x2F;&gt;
+In sveltekit file routing one needs to have different files for different purposes (.svelte, .server.ts and .page.server.ts, page.ts)&lt;br &#x2F;&gt;
+In fresh you write only tsx files. The controller logic is in a handler function and you also return your javascript from it. using jsx.&lt;br &#x2F;&gt;
+The main selling point of the .svelte file is that you write html and css separately, but in reality nowadays people use inline style with tailwindcss. and the jsx is ok since it is server sided rendered.&lt;br &#x2F;&gt;
+It was a nice experience, but i&#x27;m not sure if well suited for large applications.&lt;br &#x2F;&gt;
+I think i will continue writing this bookmark app in fresh and see how it goes. All files are saved in markdown so it will be easy to migrate to another stack if needed in the future.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Parse WordPress to Markdown</title>
+        <published>2024-01-19T09:58:44+00:00</published>
+        <updated>2024-01-19T09:58:44+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/"/>
+        <id>https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/">&lt;p&gt;I already expressed my attempts to use wordpress but save a backup of the website in markdown (at least the posts) here &lt;a href=&quot;&#x2F;&quot;&gt;Managed&#x2F; to make a markdown backup from wordpress&lt;&#x2F;a&gt;, and here &lt;a href=&quot;&#x2F;&quot;&gt;Ensure&#x2F; Markdown is the true format of my posts&lt;&#x2F;a&gt;.&lt;br &#x2F;&gt;
+I believe I found the best way to achieve that. The backup is done in two stages.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;first-step&quot;&gt;First step&lt;&#x2F;h2&gt;
+&lt;p&gt;Create a backup in json. For this I wrote a python script that reads from the database and saves the dates, slugs, tags and content in a json. The content still in html.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;import mysql.connector
+&lt;&#x2F;span&gt;&lt;span&gt;import json
+&lt;&#x2F;span&gt;&lt;span&gt;import re
+&lt;&#x2F;span&gt;&lt;span&gt;import os
+&lt;&#x2F;span&gt;&lt;span&gt;import shutil
+&lt;&#x2F;span&gt;&lt;span&gt;from urllib.parse import unquote
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;# Replace these with your WordPress MySQL database credentials
+&lt;&#x2F;span&gt;&lt;span&gt;db_config = {
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;host&amp;#39;: &amp;#39;localhost&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;user&amp;#39;: &amp;#39;wordpress&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;password&amp;#39;: &amp;#39;password&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;database&amp;#39;: &amp;#39;wordpress&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;# Specify the base folder for saving posts and images
+&lt;&#x2F;span&gt;&lt;span&gt;base_folder = &amp;quot;posts&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;# Create the base folder if it doesn&amp;#39;t exist
+&lt;&#x2F;span&gt;&lt;span&gt;if not os.path.exists(base_folder):
+&lt;&#x2F;span&gt;&lt;span&gt;    os.makedirs(base_folder)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;attachment_paths = []
+&lt;&#x2F;span&gt;&lt;span&gt;def update_links(match):
+&lt;&#x2F;span&gt;&lt;span&gt;    link = match.group(0)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Check if the link is an attachment
+&lt;&#x2F;span&gt;&lt;span&gt;    if &amp;#39;wp-content&#x2F;uploads&amp;#39; in link:
+&lt;&#x2F;span&gt;&lt;span&gt;        # Extract the path after &#x2F;uploads
+&lt;&#x2F;span&gt;&lt;span&gt;        path_after_uploads = link.split(&amp;#39;&#x2F;uploads&amp;#39;, 1)[-1]
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Remove IP from the link and update to reference a folder
+&lt;&#x2F;span&gt;&lt;span&gt;        updated_link = f&amp;#39;&#x2F;uploads{path_after_uploads}&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Save the path of the attachment file to the list
+&lt;&#x2F;span&gt;&lt;span&gt;        attachment_paths.append(updated_link)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        return updated_link
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Check if the link is to another post
+&lt;&#x2F;span&gt;&lt;span&gt;    elif &amp;#39;192.168.1.217&amp;#39; in link:
+&lt;&#x2F;span&gt;&lt;span&gt;        # Extract the post slug from the link
+&lt;&#x2F;span&gt;&lt;span&gt;        slug = link.split(&amp;#39;&#x2F;&amp;#39;)[-1]
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Replace the link with the post slug
+&lt;&#x2F;span&gt;&lt;span&gt;        updated_link = f&amp;#39;&#x2F;{slug}&#x2F;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;        return updated_link
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # If it&amp;#39;s a different type of link, leave it unchanged
+&lt;&#x2F;span&gt;&lt;span&gt;    return link
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;# Establish a connection to the WordPress MySQL database
+&lt;&#x2F;span&gt;&lt;span&gt;try:
+&lt;&#x2F;span&gt;&lt;span&gt;    connection = mysql.connector.connect(**db_config)
+&lt;&#x2F;span&gt;&lt;span&gt;    cursor = connection.cursor()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Query to fetch post titles
+&lt;&#x2F;span&gt;&lt;span&gt;    query = &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;    SELECT
+&lt;&#x2F;span&gt;&lt;span&gt;        post_date AS creation_date,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_modified AS update_date,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_title AS title,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_name AS slug,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_content AS content,
+&lt;&#x2F;span&gt;&lt;span&gt;        GROUP_CONCAT(DISTINCT terms.name) AS tags,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_status AS status
+&lt;&#x2F;span&gt;&lt;span&gt;    FROM
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_posts
+&lt;&#x2F;span&gt;&lt;span&gt;    LEFT JOIN
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_term_relationships ON wp_posts.ID = wp_term_relationships.object_id
+&lt;&#x2F;span&gt;&lt;span&gt;    LEFT JOIN
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_term_taxonomy ON wp_term_relationships.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id
+&lt;&#x2F;span&gt;&lt;span&gt;    LEFT JOIN
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_terms AS terms ON wp_term_taxonomy.term_id = terms.term_id
+&lt;&#x2F;span&gt;&lt;span&gt;    WHERE
+&lt;&#x2F;span&gt;&lt;span&gt;        post_type = &amp;#39;post&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;        AND post_status = &amp;#39;publish&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;    GROUP BY
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_posts.ID
+&lt;&#x2F;span&gt;&lt;span&gt;    ORDER BY
+&lt;&#x2F;span&gt;&lt;span&gt;        post_date DESC;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Execute the query
+&lt;&#x2F;span&gt;&lt;span&gt;    cursor.execute(query)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Fetch all rows
+&lt;&#x2F;span&gt;&lt;span&gt;    posts = cursor.fetchall()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Print the titles of all posts
+&lt;&#x2F;span&gt;&lt;span&gt;    for post in posts:
+&lt;&#x2F;span&gt;&lt;span&gt;        creation_date = post[0]
+&lt;&#x2F;span&gt;&lt;span&gt;        content = post[4]
+&lt;&#x2F;span&gt;&lt;span&gt;        slug = unquote(post[3])
+&lt;&#x2F;span&gt;&lt;span&gt;        # Generate filename based on creation date and slug
+&lt;&#x2F;span&gt;&lt;span&gt;        filename = f&amp;quot;{creation_date.strftime(&amp;#39;%Y%m%d%H%M%S&amp;#39;)}_{slug}.json&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Update links in the content
+&lt;&#x2F;span&gt;&lt;span&gt;        updated_content = re.sub(r&amp;#39;https?:&#x2F;&#x2F;192\.168\.1\.217\S+&amp;#39;, update_links, content)
+&lt;&#x2F;span&gt;&lt;span&gt;     # Create a dictionary with post details
+&lt;&#x2F;span&gt;&lt;span&gt;        post_data = {
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;creation_date&amp;quot;: creation_date.strftime(&amp;#39;%Y-%m-%d %H:%M:%S&amp;#39;),
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;update_date&amp;quot;: post[1].strftime(&amp;#39;%Y-%m-%d %H:%M:%S&amp;#39;),
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;title&amp;quot;: post[2],
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;slug&amp;quot;: slug,  
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;content&amp;quot;: updated_content.splitlines(),
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;tags&amp;quot;: post[5].split(&amp;#39;,&amp;#39;),
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;status&amp;quot;: post[6]
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;        # Generate filename based on creation date and slug
+&lt;&#x2F;span&gt;&lt;span&gt;        filename = os.path.join(base_folder, f&amp;quot;{creation_date.strftime(&amp;#39;%Y%m%d%H%M%S&amp;#39;)}_{slug}.json&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Save post data to a JSON file in the &amp;quot;posts&amp;quot; folder
+&lt;&#x2F;span&gt;&lt;span&gt;        with open(filename, &amp;#39;w&amp;#39;) as json_file:
+&lt;&#x2F;span&gt;&lt;span&gt;            json.dump(post_data, json_file, ensure_ascii=False, indent=4)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        print(f&amp;quot;Saved {filename}&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;quot;\nAttachment Paths:&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;    for path in attachment_paths:
+&lt;&#x2F;span&gt;&lt;span&gt;        print(path)
+&lt;&#x2F;span&gt;&lt;span&gt;    uploads_folder = os.path.join(base_folder, &amp;quot;uploads&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    shutil.copytree(&amp;#39;&#x2F;var&#x2F;www&#x2F;wordpress&#x2F;wp-content&#x2F;uploads&amp;#39;,uploads_folder, dirs_exist_ok=True)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;except mysql.connector.Error as err:
+&lt;&#x2F;span&gt;&lt;span&gt;    print(f&amp;quot;Error: {err}&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;finally:
+&lt;&#x2F;span&gt;&lt;span&gt;    # Close the cursor and connection
+&lt;&#x2F;span&gt;&lt;span&gt;    if &amp;#39;cursor&amp;#39; in locals() and cursor is not None:
+&lt;&#x2F;span&gt;&lt;span&gt;        cursor.close()
+&lt;&#x2F;span&gt;&lt;span&gt;    if &amp;#39;connection&amp;#39; in locals() and connection.is_connected():
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;second-step&quot;&gt;Second step&lt;&#x2F;h2&gt;
+&lt;p&gt;Using javascript&#x2F;typescript and deno, run a script taht reads the jsons and converts to markdown. This is easily done using &lt;a href=&quot;https:&#x2F;&#x2F;unifiedjs.com&#x2F;&quot;&gt;unifiedjs&lt;&#x2F;a&gt; project.&lt;br &#x2F;&gt;
+The script even adds a &lt;code&gt;.&lt;&#x2F;code&gt; for the internal links, making sure that they are rendered ok in github.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;import rehypeParse from &amp;quot;npm:rehype-parse&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import rehypeRemark from &amp;quot;npm:rehype-remark&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import remarkStringify from &amp;quot;npm:remark-stringify&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import remarkGfm from &amp;quot;npm:remark-gfm&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import removeComments from &amp;quot;npm:remark-remove-comments&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import rehypeStringify from &amp;quot;npm:rehype-stringify&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;import * as path from &amp;quot;https:&#x2F;&#x2F;deno.land&#x2F;std@0.97.0&#x2F;path&#x2F;mod.ts&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import { copy, ensureDir } from &amp;quot;https:&#x2F;&#x2F;deno.land&#x2F;std@0.97.0&#x2F;fs&#x2F;mod.ts&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;import { unified } from &amp;quot;npm:unified&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;try {
+&lt;&#x2F;span&gt;&lt;span&gt;  let dirName = &amp;quot;.&#x2F;posts&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;  let mdDirName = &amp;quot;.&#x2F;md&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;  const dirEntries = await Deno.readDir(dirName);
+&lt;&#x2F;span&gt;&lt;span&gt;  const uploadsSet = new Set&amp;lt;string&amp;gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  for await (const entry of dirEntries) {
+&lt;&#x2F;span&gt;&lt;span&gt;    if (entry.isFile) {
+&lt;&#x2F;span&gt;&lt;span&gt;      const filePath = `${dirName}&#x2F;${entry.name}`;
+&lt;&#x2F;span&gt;&lt;span&gt;      const fileContent = await Deno.readTextFile(filePath);
+&lt;&#x2F;span&gt;&lt;span&gt;      const fileJson = await JSON.parse(fileContent);
+&lt;&#x2F;span&gt;&lt;span&gt;      const mdFile = await parseToMd(fileJson, uploadsSet);
+&lt;&#x2F;span&gt;&lt;span&gt;      const mdFilePath = `${mdDirName}&#x2F;${path.parse(entry.name).name + &amp;quot;.md&amp;quot;}`;
+&lt;&#x2F;span&gt;&lt;span&gt;      await Deno.writeTextFile(mdFilePath, mdFile);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;  }
+&lt;&#x2F;span&gt;&lt;span&gt;  &#x2F;&#x2F; Print the set of links after the main loop
+&lt;&#x2F;span&gt;&lt;span&gt;  await Promise.all(Array.from(uploadsSet).map(async (filePath) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    const sourcePath = `.&#x2F;posts${filePath}`;
+&lt;&#x2F;span&gt;&lt;span&gt;    const destinationPath = `.&#x2F;md${filePath}`;
+&lt;&#x2F;span&gt;&lt;span&gt;    await ensureDir(path.dirname(destinationPath));
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    await copy(sourcePath, destinationPath, { overwrite: true });
+&lt;&#x2F;span&gt;&lt;span&gt;  }));
+&lt;&#x2F;span&gt;&lt;span&gt;console.log(&amp;#39;md done&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;} catch (error) {
+&lt;&#x2F;span&gt;&lt;span&gt;  console.log(error);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;async function parseToMd(jsonFile, uploadsSet) {
+&lt;&#x2F;span&gt;&lt;span&gt;  let md = &amp;quot;&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;  let frontmatter = `---
+&lt;&#x2F;span&gt;&lt;span&gt;title: &amp;quot;${jsonFile.title}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;created: &amp;quot;${jsonFile.creation_date}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;lastmod: &amp;quot;${jsonFile.update_date}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;slug: &amp;quot;${jsonFile.slug}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;draft: ${jsonFile.status === &amp;quot;published&amp;quot; ? false : true}
+&lt;&#x2F;span&gt;&lt;span&gt;tags:
+&lt;&#x2F;span&gt;&lt;span&gt;`;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  for (const tag of jsonFile.tags) {
+&lt;&#x2F;span&gt;&lt;span&gt;    frontmatter += `  - ${tag}\n`;
+&lt;&#x2F;span&gt;&lt;span&gt;  }
+&lt;&#x2F;span&gt;&lt;span&gt;  frontmatter += `---\n`;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  let cnt = jsonFile.content.map((line) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    if (line === &amp;quot;&amp;quot;) {
+&lt;&#x2F;span&gt;&lt;span&gt;      line = &amp;quot;\n&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    return line;
+&lt;&#x2F;span&gt;&lt;span&gt;  }).join(&amp;quot;\n\n&amp;quot;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  const body = await unified()
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(rehypeParse, { fragment: true })
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(() =&amp;gt; prependDotToImagePath(uploadsSet))
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(rehypeRemark)
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(remarkGfm)
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(removeComments)
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(remarkStringify)
+&lt;&#x2F;span&gt;&lt;span&gt;    .process(cnt);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  const mdContent = String(body);
+&lt;&#x2F;span&gt;&lt;span&gt;  return frontmatter + &amp;quot;\n&amp;quot; + mdContent;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;function prependDotToImagePath(uploadsSet) {
+&lt;&#x2F;span&gt;&lt;span&gt;  const visit = (node) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    if (node.type === &amp;quot;element&amp;quot; &amp;amp;&amp;amp; node.properties) {
+&lt;&#x2F;span&gt;&lt;span&gt;      &#x2F;&#x2F; Handle img tags
+&lt;&#x2F;span&gt;&lt;span&gt;      if (
+&lt;&#x2F;span&gt;&lt;span&gt;        node.tagName === &amp;quot;img&amp;quot; &amp;amp;&amp;amp; node.properties.src &amp;amp;&amp;amp;
+&lt;&#x2F;span&gt;&lt;span&gt;        node.properties.src.startsWith(&amp;quot;&#x2F;uploads&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;      ) {
+&lt;&#x2F;span&gt;&lt;span&gt;        uploadsSet.add(node.properties.src);
+&lt;&#x2F;span&gt;&lt;span&gt;        node.properties.src = `.${node.properties.src}`;
+&lt;&#x2F;span&gt;&lt;span&gt;      }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &#x2F;&#x2F; Handle a tags
+&lt;&#x2F;span&gt;&lt;span&gt;      if (
+&lt;&#x2F;span&gt;&lt;span&gt;        node.tagName === &amp;quot;a&amp;quot; &amp;amp;&amp;amp; node.properties.href &amp;amp;&amp;amp;
+&lt;&#x2F;span&gt;&lt;span&gt;        node.properties.href.startsWith(&amp;quot;&#x2F;uploads&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;      ) {
+&lt;&#x2F;span&gt;&lt;span&gt;        uploadsSet.add(node.properties.href);
+&lt;&#x2F;span&gt;&lt;span&gt;        node.properties.href = `.${node.properties.href}`;
+&lt;&#x2F;span&gt;&lt;span&gt;      }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    if (node.children) {
+&lt;&#x2F;span&gt;&lt;span&gt;      node.children.forEach(visit);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;  };
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  return (tree) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    tree.children.forEach(visit);
+&lt;&#x2F;span&gt;&lt;span&gt;  };
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Might need to update scripts when i find errors, but so far is good enough.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

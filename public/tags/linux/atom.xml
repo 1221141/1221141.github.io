@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - linux</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/linux/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-01-16T11:08:58+00:00</updated>
+    <id>https://1221141.github.io/tags/linux/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Xargs Explained</title>
+        <published>2024-01-16T11:08:58+00:00</published>
+        <updated>2024-01-16T11:08:58+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240116110858-xargs-explained/"/>
+        <id>https://1221141.github.io/blog/20240116110858-xargs-explained/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240116110858-xargs-explained/">&lt;p&gt;https:&#x2F;&#x2F;youtube.com&#x2F;watch?v=HK1wAV9x4-A&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Edit theme via wordpress gui</title>
+        <published>2024-01-04T22:54:10+00:00</published>
+        <updated>2024-01-04T22:54:10+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240104225410-edit-theme-via-wordpress-gui/"/>
+        <id>https://1221141.github.io/blog/20240104225410-edit-theme-via-wordpress-gui/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240104225410-edit-theme-via-wordpress-gui/">&lt;p&gt;In order to edit a theme in the wordpress gui go to &lt;code&gt;Appearance &amp;gt; Theme File Editor&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;In order to have an update button the correct used should be &lt;code&gt;www-data&lt;&#x2F;code&gt;. To fix this go to the wp-content page for your theme and run this.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;chown&lt;&#x2F;span&gt;&lt;span&gt; www-data:www-data&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;  -R &lt;&#x2F;span&gt;&lt;span&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Let Apache be owner
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;find&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -type&lt;&#x2F;span&gt;&lt;span&gt; d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -exec&lt;&#x2F;span&gt;&lt;span&gt; chmod 755 {} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Change directory permissions rwxr-xr-x
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;find&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -type&lt;&#x2F;span&gt;&lt;span&gt; f&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -exec&lt;&#x2F;span&gt;&lt;span&gt; chmod 644 {} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Change file permissions rw-r--r--
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Source: &lt;em&gt;&lt;a href=&quot;https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;18352682&#x2F;correct-file-permissions-for-wordpress&quot;&gt;php - Correct file permissions for WordPress - Stack Overflow&lt;&#x2F;a&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Update Proxmox Without Subscription - YouTube</title>
+        <published>2024-01-04T16:22:54+00:00</published>
+        <updated>2024-01-04T16:22:54+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240104162254-update-proxmox-without-subscription-youtube/"/>
+        <id>https://1221141.github.io/blog/20240104162254-update-proxmox-without-subscription-youtube/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240104162254-update-proxmox-without-subscription-youtube/">&lt;p&gt;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=Q0Dh7IeUevw&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Finance with Hledger and Ledger
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/notes">&#47;notes&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-02-19T12:20:27</strong></p>
+<p>Ledger is a tool to track the personal finances using a technique called double entry bookkeeping. <a href="https://en.wikipedia.org/wiki/Double-entry_bookkeeping">https://en.wikipedia.org/wiki/Double-entry_bookkeeping</a><br />
+The idea is to use a plain text to write down the expenses and assets, and use a cli tool like ledger of hledger to generated different types of reports.<br />
+I tried it before but found extremely tedious to input the expenses, and my partner wants to use a spreadsheet to keep things simpler.<br />
+I found that there is a tool to easily enter transactions via the cli. It is called <strong>hledger-iadd.</strong> &lt;<a href="https://github.com/hpdeifel/hledger-iadd">https://github.com/hpdeifel/hledger-iadd</a>&gt;<br />
+Unfortunetely I could only find installation and builds of the binary for Arch linux. I installed in my EndeavourOS Installation.<br />
+I enter the transactions with it, and then later I do some alterations in python to generate the report to paste on the spreadsheet.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>
+</span><span>#!/usr/bin/python3
+</span><span>import csv
+</span><span>import sys
+</span><span>from datetime import datetime
+</span><span># Define the expense mapping dictionary
+</span><span>expense_mapping = {
+</span><span>&#39;expenses:bank fee&#39;: &#39;Bank fee&#39;,
+</span><span>&#39;expenses:clothing&#39;: &#39;Clothing&#39;,
+</span><span>&#39;expenses:food/dining out&#39;: &#39;Food/Dining Out&#39;,
+</span><span>&#39;expenses:groceries&#39;: &#39;Groceries&#39;,
+</span><span>&#39;expenses:health&#39;: &#39;Health&#39;,
+</span><span>&#39;expenses:pharmacy&#39;: &#39;Pharmachy&#39;,
+</span><span>&#39;expenses:house&#39;: &#39;House&#39;,
+</span><span>&#39;expenses:insurance&#39;: &#39;Insurance&#39;,
+</span><span>&#39;expenses:internet&#39;: &#39;Internet&#39;,
+</span><span>&#39;expenses:shopping&#39;: &#39;Shopping&#39;,
+</span><span>&#39;expenses:transportation&#39;: &#39;Transportation&#39;,
+</span><span>&#39;expenses:trips&#39;: &#39;Trips&#39;,
+</span><span>&#39;expenses:union&#39;: &#39;Union&#39;
+</span><span>}
+</span><span>
+</span><span>
+</span><span>def map_expenses(reader):
+</span><span># Read the CSV input and apply the mapping
+</span><span>for row in reader:
+</span><span>category = row[2]  # Assuming the category is in the third column
+</span><span>mapped_category = expense_mapping.get(category, &#39;Other&#39;)
+</span><span>date_obj = datetime.strptime(row[0], &#39;%Y/%m/%d&#39;)
+</span><span>formatted_date = date_obj.strftime(&#39;%m/%d/%Y&#39;)
+</span><span>amount = row[3].split()[0]  # Assuming the amount is in the fourth column
+</span><span>print(&#39;,&#39;.join([formatted_date, row[1], mapped_category, amount]))
+</span><span>
+</span><span>
+</span><span>if __name__ == &quot;__main__&quot;:
+</span><span># Read from stdin as CSV
+</span><span>reader = csv.reader(sys.stdin)
+</span><span>map_expenses(reader)
+</span></code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Here is the script I use to generate the report. e.g.: 
+</span><span>
+</span><span>
+</span><span>./export.sh jan
+</span></code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>
+</span><span>$ cat export.sh 
+</span><span>#!/bin/bash
+</span><span>
+</span><span>
+</span><span>if [ -z &quot;$1&quot; ]; then
+</span><span>    echo &quot;Period is not set. Aborting.&quot;
+</span><span>    exit 1
+</span><span>fi
+</span><span>PERIOD=$1
+</span><span>ledger -f 2024.journal --period $PERIOD register --depth=2 --format=&#39;%(date),1221141,%(account),%(amount(number))\n&#39; expenses | ./tocsv.py
+</span></code></pre>
+<p> </p>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

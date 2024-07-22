@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Edit theme via wordpress gui
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/linux">&#47;linux&#47;</a>
+  
+  <a href="/tags/wordpress">&#47;wordpress&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-04T22:54:10</strong></p>
+<p>In order to edit a theme in the wordpress gui go to <code>Appearance &gt; Theme File Editor</code>.</p>
+<p>In order to have an update button the correct used should be <code>www-data</code>. To fix this go to the wp-content page for your theme and run this.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">chown</span><span> www-data:www-data</span><span style="color:#bf616a;">  -R </span><span>* </span><span style="color:#65737e;"># Let Apache be owner
+</span><span style="color:#bf616a;">find</span><span> .</span><span style="color:#bf616a;"> -type</span><span> d</span><span style="color:#bf616a;"> -exec</span><span> chmod 755 {} </span><span style="color:#96b5b4;">\;  </span><span style="color:#65737e;"># Change directory permissions rwxr-xr-x
+</span><span style="color:#bf616a;">find</span><span> .</span><span style="color:#bf616a;"> -type</span><span> f</span><span style="color:#bf616a;"> -exec</span><span> chmod 644 {} </span><span style="color:#96b5b4;">\;  </span><span style="color:#65737e;"># Change file permissions rw-r--r--
+</span></code></pre>
+<p>Source: <em><a href="https://stackoverflow.com/questions/18352682/correct-file-permissions-for-wordpress">php - Correct file permissions for WordPress - Stack Overflow</a></em></p>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

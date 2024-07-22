@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - emacs</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/emacs/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-07-08T12:27:04+00:00</updated>
+    <id>https://1221141.github.io/tags/emacs/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Emacs: url-copy-file</title>
+        <published>2024-07-08T12:27:04+00:00</published>
+        <updated>2024-07-08T12:27:04+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240708122704-emacs-url-copy-file/"/>
+        <id>https://1221141.github.io/blog/20240708122704-emacs-url-copy-file/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240708122704-emacs-url-copy-file/">&lt;p&gt;Download file from URL:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;(url-copy-file &amp;quot;https:&#x2F;&#x2F;img.youtube.com&#x2F;vi&#x2F;MdH4H8pnJL8&#x2F;maxresdefault.jpg&amp;quot; &amp;quot;test.jpg&amp;quot; t)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt; &lt;br &#x2F;&gt;
+Doc:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;url-copy-file is an autoloaded byte-compiled Lisp function in
+&lt;&#x2F;span&gt;&lt;span&gt;‘url-handlers.el’.
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;(url-copy-file URL NEWNAME &amp;amp;optional OK-IF-ALREADY-EXISTS &amp;amp;rest
+&lt;&#x2F;span&gt;&lt;span&gt;IGNORED)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Copy URL to NEWNAME.  Both arguments must be strings.
+&lt;&#x2F;span&gt;&lt;span&gt;Signal a ‘file-already-exists’ error if file NEWNAME already
+&lt;&#x2F;span&gt;&lt;span&gt;exists, unless a third argument OK-IF-ALREADY-EXISTS is supplied
+&lt;&#x2F;span&gt;&lt;span&gt;and non-nil.  An integer as third argument means request
+&lt;&#x2F;span&gt;&lt;span&gt;confirmation if NEWNAME already exists.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt; &lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>emacs increase font of whole ui</title>
+        <published>2024-05-28T09:51:34+00:00</published>
+        <updated>2024-05-28T09:51:34+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240528095134-emacs-increase-font-of-whole-ui/"/>
+        <id>https://1221141.github.io/blog/20240528095134-emacs-increase-font-of-whole-ui/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240528095134-emacs-increase-font-of-whole-ui/">&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;(set-face-attribute &amp;#39;default nil :family &amp;quot;Monospace&amp;quot; :height 160)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt; &lt;br &#x2F;&gt;
+ &lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

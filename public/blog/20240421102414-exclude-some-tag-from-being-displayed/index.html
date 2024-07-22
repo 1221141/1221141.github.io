@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Exclude some tag from being displayed
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/wordpress">&#47;wordpress&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-04-21T10:24:14</strong></p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>function exclude_from_loop($query) {
+</span><span>    // Check if it&#39;s the main query and not in admin area
+</span><span>    if ($query-&gt;is_main_query() &amp;&amp; !is_admin()) {
+</span><span>        // Replace 123 with the ID of the tag you want to exclude
+</span><span>        $exclude_tag_id = 102;
+</span><span>        $$exclude_category_id = 105;
+</span><span>        // Exclude posts with the specified tag
+</span><span>        $query-&gt;set(&#39;tag__not_in&#39;, array($exclude_tag_id));
+</span><span>		$query-&gt;set(&#39;category__not_in&#39;, array($exclude_category_id));
+</span><span>
+</span><span>
+</span><span>    }
+</span><span>}
+</span><span>add_action(&#39;pre_get_posts&#39;, &#39;exclude_from_loop&#39;);
+</span></code></pre>
+<p> </p>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

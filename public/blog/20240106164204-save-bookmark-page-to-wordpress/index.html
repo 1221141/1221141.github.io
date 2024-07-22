@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Save bookmark page to wordpress
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/blogging">&#47;blogging&#47;</a>
+  
+  <a href="/tags/wordpress">&#47;wordpress&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-06T16:42:04</strong></p>
+<p>As a continuation of the what I wrote here: <a href="/20240105114834_create-a-worpress-post-with-a-javascript-bookmarklet">Create/ a worpress post with a javascript bookmarklet</a> I created a bookmark<strong>let</strong> to create bookmarks.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>
+</span><span>javascript: (function() {
+</span><span>    var title = document.title;
+</span><span>    if (!title) return;
+</span><span>    var lines = [document.URL];
+</span><span>    var quote = window.getSelection().toString();
+</span><span>    if (quote.trim()) lines = lines.concat(quote.split(/\n/g).map(function(line) {
+</span><span>        return &#39;&lt;blockquote&gt;&#39; + line + &#39;&lt;/blockquote&gt;&#39;
+</span><span>    }));
+</span><span>    lines.push(&#39;&#39;);
+</span><span>    var body = encodeURIComponent(lines.join(&#39;\n&#39;));    window.open(&#39;/imdb.php?title=&#39;/ + encodeURIComponent(title.trim()) + &#39;&amp;body=&#39; + encodeURIComponent(lines.join(&#39;\n&#39;).trim()) + &#39;&amp;tags=bookmark&amp;category=bookmark&#39;);
+</span><span>
+</span><span>
+</span><span>})();
+</span></code></pre>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

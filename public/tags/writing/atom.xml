@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - writing</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/writing/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-01-04T12:53:46+00:00</updated>
+    <id>https://1221141.github.io/tags/writing/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Thoughts on wordpress</title>
+        <published>2024-01-04T12:53:46+00:00</published>
+        <updated>2024-01-04T12:53:46+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240104125346-thoughts-on-wordpress/"/>
+        <id>https://1221141.github.io/blog/20240104125346-thoughts-on-wordpress/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240104125346-thoughts-on-wordpress/">&lt;p&gt;I have never worked with WordPress before, since I&#x27;ve never felt the need to write anything online and when if finally decided the whole static site generators were the new trend.&lt;br &#x2F;&gt;
+I tend to really like to keep my own data, so I thought it was the best way to keep my notes and thoughts. But since now I&#x27;ve been self-hosting my own applications it felt that might be ok to at least try wordpress. So far I am liking, but I definitely need to find a way to export the posts to markdown for long time storage.&lt;br &#x2F;&gt;
+I&#x27;ve been trying to use the combo {text editor, markdow, git, hugo}, and I really miss something where I can write from my phone.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;my-data&quot;&gt;My Data&lt;&#x2F;h2&gt;
+&lt;p&gt;I want to write and not really spend time tinkering with scripts and renaming stuff. I might need to write another script to export the data from wordpress. But since I am self hosting I can say that the data &lt;strong&gt;is mine&lt;&#x2F;strong&gt; and I can do that in later time.&lt;br &#x2F;&gt;
+I also want to automate some posts creations, since I also want to use this to bookmark some websites that I find interesting.&lt;br &#x2F;&gt;
+Well, time to spend time learning about wordpress, but I guess this will be repetitively easy, since it has been going from a long time and there is a lot of resources online.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

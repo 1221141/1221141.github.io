@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Parse WordPress to Markdown
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/blog">&#47;blog&#47;</a>
+  
+  <a href="/tags/deno">&#47;deno&#47;</a>
+  
+  <a href="/tags/markdown">&#47;markdown&#47;</a>
+  
+  <a href="/tags/notes">&#47;notes&#47;</a>
+  
+  <a href="/tags/python">&#47;python&#47;</a>
+  
+  <a href="/tags/wordpress">&#47;wordpress&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-19T09:58:44</strong></p>
+<p>I already expressed my attempts to use wordpress but save a backup of the website in markdown (at least the posts) here <a href="/">Managed/ to make a markdown backup from wordpress</a>, and here <a href="/">Ensure/ Markdown is the true format of my posts</a>.<br />
+I believe I found the best way to achieve that. The backup is done in two stages.</p>
+<h2 id="first-step">First step</h2>
+<p>Create a backup in json. For this I wrote a python script that reads from the database and saves the dates, slugs, tags and content in a json. The content still in html.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>
+</span><span>import mysql.connector
+</span><span>import json
+</span><span>import re
+</span><span>import os
+</span><span>import shutil
+</span><span>from urllib.parse import unquote
+</span><span>
+</span><span>
+</span><span># Replace these with your WordPress MySQL database credentials
+</span><span>db_config = {
+</span><span>    &#39;host&#39;: &#39;localhost&#39;,
+</span><span>    &#39;user&#39;: &#39;wordpress&#39;,
+</span><span>    &#39;password&#39;: &#39;password&#39;,
+</span><span>    &#39;database&#39;: &#39;wordpress&#39;,
+</span><span>}
+</span><span>
+</span><span>
+</span><span># Specify the base folder for saving posts and images
+</span><span>base_folder = &quot;posts&quot;
+</span><span>
+</span><span>
+</span><span># Create the base folder if it doesn&#39;t exist
+</span><span>if not os.path.exists(base_folder):
+</span><span>    os.makedirs(base_folder)
+</span><span>
+</span><span>
+</span><span>attachment_paths = []
+</span><span>def update_links(match):
+</span><span>    link = match.group(0)
+</span><span>
+</span><span>
+</span><span>    # Check if the link is an attachment
+</span><span>    if &#39;wp-content/uploads&#39; in link:
+</span><span>        # Extract the path after /uploads
+</span><span>        path_after_uploads = link.split(&#39;/uploads&#39;, 1)[-1]
+</span><span>
+</span><span>
+</span><span>        # Remove IP from the link and update to reference a folder
+</span><span>        updated_link = f&#39;/uploads{path_after_uploads}&#39;
+</span><span>
+</span><span>
+</span><span>        # Save the path of the attachment file to the list
+</span><span>        attachment_paths.append(updated_link)
+</span><span>
+</span><span>
+</span><span>        return updated_link
+</span><span>
+</span><span>
+</span><span>    # Check if the link is to another post
+</span><span>    elif &#39;192.168.1.217&#39; in link:
+</span><span>        # Extract the post slug from the link
+</span><span>        slug = link.split(&#39;/&#39;)[-1]
+</span><span>
+</span><span>
+</span><span>        # Replace the link with the post slug
+</span><span>        updated_link = f&#39;/{slug}/&#39;
+</span><span>        return updated_link
+</span><span>
+</span><span>
+</span><span>    # If it&#39;s a different type of link, leave it unchanged
+</span><span>    return link
+</span><span>
+</span><span>
+</span><span># Establish a connection to the WordPress MySQL database
+</span><span>try:
+</span><span>    connection = mysql.connector.connect(**db_config)
+</span><span>    cursor = connection.cursor()
+</span><span>
+</span><span>
+</span><span>    # Query to fetch post titles
+</span><span>    query = &quot;&quot;&quot;
+</span><span>    SELECT
+</span><span>        post_date AS creation_date,
+</span><span>        post_modified AS update_date,
+</span><span>        post_title AS title,
+</span><span>        post_name AS slug,
+</span><span>        post_content AS content,
+</span><span>        GROUP_CONCAT(DISTINCT terms.name) AS tags,
+</span><span>        post_status AS status
+</span><span>    FROM
+</span><span>        wp_posts
+</span><span>    LEFT JOIN
+</span><span>        wp_term_relationships ON wp_posts.ID = wp_term_relationships.object_id
+</span><span>    LEFT JOIN
+</span><span>        wp_term_taxonomy ON wp_term_relationships.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id
+</span><span>    LEFT JOIN
+</span><span>        wp_terms AS terms ON wp_term_taxonomy.term_id = terms.term_id
+</span><span>    WHERE
+</span><span>        post_type = &#39;post&#39;
+</span><span>        AND post_status = &#39;publish&#39;
+</span><span>    GROUP BY
+</span><span>        wp_posts.ID
+</span><span>    ORDER BY
+</span><span>        post_date DESC;
+</span><span>    &quot;&quot;&quot;
+</span><span>
+</span><span>
+</span><span>    # Execute the query
+</span><span>    cursor.execute(query)
+</span><span>
+</span><span>
+</span><span>    # Fetch all rows
+</span><span>    posts = cursor.fetchall()
+</span><span>
+</span><span>
+</span><span>    # Print the titles of all posts
+</span><span>    for post in posts:
+</span><span>        creation_date = post[0]
+</span><span>        content = post[4]
+</span><span>        slug = unquote(post[3])
+</span><span>        # Generate filename based on creation date and slug
+</span><span>        filename = f&quot;{creation_date.strftime(&#39;%Y%m%d%H%M%S&#39;)}_{slug}.json&quot;
+</span><span>        # Update links in the content
+</span><span>        updated_content = re.sub(r&#39;https?://192\.168\.1\.217\S+&#39;, update_links, content)
+</span><span>     # Create a dictionary with post details
+</span><span>        post_data = {
+</span><span>            &quot;creation_date&quot;: creation_date.strftime(&#39;%Y-%m-%d %H:%M:%S&#39;),
+</span><span>            &quot;update_date&quot;: post[1].strftime(&#39;%Y-%m-%d %H:%M:%S&#39;),
+</span><span>            &quot;title&quot;: post[2],
+</span><span>            &quot;slug&quot;: slug,  
+</span><span>            &quot;content&quot;: updated_content.splitlines(),
+</span><span>            &quot;tags&quot;: post[5].split(&#39;,&#39;),
+</span><span>            &quot;status&quot;: post[6]
+</span><span>        }
+</span><span>        # Generate filename based on creation date and slug
+</span><span>        filename = os.path.join(base_folder, f&quot;{creation_date.strftime(&#39;%Y%m%d%H%M%S&#39;)}_{slug}.json&quot;)
+</span><span>
+</span><span>
+</span><span>        # Save post data to a JSON file in the &quot;posts&quot; folder
+</span><span>        with open(filename, &#39;w&#39;) as json_file:
+</span><span>            json.dump(post_data, json_file, ensure_ascii=False, indent=4)
+</span><span>
+</span><span>
+</span><span>        print(f&quot;Saved {filename}&quot;)
+</span><span>
+</span><span>
+</span><span>    print(&quot;\nAttachment Paths:&quot;)
+</span><span>    for path in attachment_paths:
+</span><span>        print(path)
+</span><span>    uploads_folder = os.path.join(base_folder, &quot;uploads&quot;)
+</span><span>
+</span><span>
+</span><span>    shutil.copytree(&#39;/var/www/wordpress/wp-content/uploads&#39;,uploads_folder, dirs_exist_ok=True)
+</span><span>
+</span><span>
+</span><span>except mysql.connector.Error as err:
+</span><span>    print(f&quot;Error: {err}&quot;)
+</span><span>
+</span><span>
+</span><span>finally:
+</span><span>    # Close the cursor and connection
+</span><span>    if &#39;cursor&#39; in locals() and cursor is not None:
+</span><span>        cursor.close()
+</span><span>    if &#39;connection&#39; in locals() and connection.is_connected():
+</span></code></pre>
+<h2 id="second-step">Second step</h2>
+<p>Using javascript/typescript and deno, run a script taht reads the jsons and converts to markdown. This is easily done using <a href="https://unifiedjs.com/">unifiedjs</a> project.<br />
+The script even adds a <code>.</code> for the internal links, making sure that they are rendered ok in github.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>import rehypeParse from &quot;npm:rehype-parse&quot;;
+</span><span>import rehypeRemark from &quot;npm:rehype-remark&quot;;
+</span><span>import remarkStringify from &quot;npm:remark-stringify&quot;;
+</span><span>import remarkGfm from &quot;npm:remark-gfm&quot;;
+</span><span>import removeComments from &quot;npm:remark-remove-comments&quot;;
+</span><span>import rehypeStringify from &quot;npm:rehype-stringify&quot;;
+</span><span>
+</span><span>
+</span><span>import * as path from &quot;https://deno.land/std@0.97.0/path/mod.ts&quot;;
+</span><span>import { copy, ensureDir } from &quot;https://deno.land/std@0.97.0/fs/mod.ts&quot;;
+</span><span>
+</span><span>
+</span><span>
+</span><span>
+</span><span>
+</span><span>
+</span><span>import { unified } from &quot;npm:unified&quot;;
+</span><span>
+</span><span>
+</span><span>try {
+</span><span>  let dirName = &quot;./posts&quot;;
+</span><span>  let mdDirName = &quot;./md&quot;;
+</span><span>  const dirEntries = await Deno.readDir(dirName);
+</span><span>  const uploadsSet = new Set&lt;string&gt;();
+</span><span>
+</span><span>
+</span><span>  for await (const entry of dirEntries) {
+</span><span>    if (entry.isFile) {
+</span><span>      const filePath = `${dirName}/${entry.name}`;
+</span><span>      const fileContent = await Deno.readTextFile(filePath);
+</span><span>      const fileJson = await JSON.parse(fileContent);
+</span><span>      const mdFile = await parseToMd(fileJson, uploadsSet);
+</span><span>      const mdFilePath = `${mdDirName}/${path.parse(entry.name).name + &quot;.md&quot;}`;
+</span><span>      await Deno.writeTextFile(mdFilePath, mdFile);
+</span><span>    }
+</span><span>  }
+</span><span>  // Print the set of links after the main loop
+</span><span>  await Promise.all(Array.from(uploadsSet).map(async (filePath) =&gt; {
+</span><span>    const sourcePath = `./posts${filePath}`;
+</span><span>    const destinationPath = `./md${filePath}`;
+</span><span>    await ensureDir(path.dirname(destinationPath));
+</span><span>
+</span><span>
+</span><span>    await copy(sourcePath, destinationPath, { overwrite: true });
+</span><span>  }));
+</span><span>console.log(&#39;md done&#39;);
+</span><span>} catch (error) {
+</span><span>  console.log(error);
+</span><span>}
+</span><span>
+</span><span>
+</span><span>async function parseToMd(jsonFile, uploadsSet) {
+</span><span>  let md = &quot;&quot;;
+</span><span>  let frontmatter = `---
+</span><span>title: &quot;${jsonFile.title}&quot;
+</span><span>created: &quot;${jsonFile.creation_date}&quot;
+</span><span>lastmod: &quot;${jsonFile.update_date}&quot;
+</span><span>slug: &quot;${jsonFile.slug}&quot;
+</span><span>draft: ${jsonFile.status === &quot;published&quot; ? false : true}
+</span><span>tags:
+</span><span>`;
+</span><span>
+</span><span>
+</span><span>  for (const tag of jsonFile.tags) {
+</span><span>    frontmatter += `  - ${tag}\n`;
+</span><span>  }
+</span><span>  frontmatter += `---\n`;
+</span><span>
+</span><span>
+</span><span>  let cnt = jsonFile.content.map((line) =&gt; {
+</span><span>    if (line === &quot;&quot;) {
+</span><span>      line = &quot;\n&quot;;
+</span><span>    }
+</span><span>    return line;
+</span><span>  }).join(&quot;\n\n&quot;);
+</span><span>
+</span><span>
+</span><span>
+</span><span>
+</span><span>  const body = await unified()
+</span><span>    .use(rehypeParse, { fragment: true })
+</span><span>    .use(() =&gt; prependDotToImagePath(uploadsSet))
+</span><span>    .use(rehypeRemark)
+</span><span>    .use(remarkGfm)
+</span><span>    .use(removeComments)
+</span><span>    .use(remarkStringify)
+</span><span>    .process(cnt);
+</span><span>
+</span><span>
+</span><span>  const mdContent = String(body);
+</span><span>  return frontmatter + &quot;\n&quot; + mdContent;
+</span><span>}
+</span><span>
+</span><span>
+</span><span>function prependDotToImagePath(uploadsSet) {
+</span><span>  const visit = (node) =&gt; {
+</span><span>    if (node.type === &quot;element&quot; &amp;&amp; node.properties) {
+</span><span>      // Handle img tags
+</span><span>      if (
+</span><span>        node.tagName === &quot;img&quot; &amp;&amp; node.properties.src &amp;&amp;
+</span><span>        node.properties.src.startsWith(&quot;/uploads&quot;)
+</span><span>      ) {
+</span><span>        uploadsSet.add(node.properties.src);
+</span><span>        node.properties.src = `.${node.properties.src}`;
+</span><span>      }
+</span><span>
+</span><span>
+</span><span>      // Handle a tags
+</span><span>      if (
+</span><span>        node.tagName === &quot;a&quot; &amp;&amp; node.properties.href &amp;&amp;
+</span><span>        node.properties.href.startsWith(&quot;/uploads&quot;)
+</span><span>      ) {
+</span><span>        uploadsSet.add(node.properties.href);
+</span><span>        node.properties.href = `.${node.properties.href}`;
+</span><span>      }
+</span><span>    }
+</span><span>
+</span><span>
+</span><span>    if (node.children) {
+</span><span>      node.children.forEach(visit);
+</span><span>    }
+</span><span>  };
+</span><span>
+</span><span>
+</span><span>  return (tree) =&gt; {
+</span><span>    tree.children.forEach(visit);
+</span><span>  };
+</span><span>}
+</span></code></pre>
+<p>Might need to update scripts when i find errors, but so far is good enough.</p>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

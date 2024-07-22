@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Managed to make a markdown backup from wordpress
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/notes">&#47;notes&#47;</a>
+  
+  <a href="/tags/wordpress">&#47;wordpress&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-04T16:35:52</strong></p>
+<p>As I wrote in a previous post, I want to use wordpress but still want to make markdown backups from my posts to make it future proof.<br />
+I think I managed to get this working using python and the <code>wp export</code>.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">wp</span><span> export</span><span style="color:#bf616a;"> --allow-root --with_attachments --skip_comments --path</span><span>=/var/www/wordpress
+</span><span style="color:#bf616a;">mkdir -p</span><span> bkp
+</span><span style="color:#96b5b4;">source</span><span> ./bin/activate
+</span><span style="color:#bf616a;">python3</span><span> wx3.py 1221141.wordpress.*.xml</span><span style="color:#bf616a;"> -o</span><span> bkp
+</span><span style="color:#96b5b4;">cd</span><span> bkp
+</span><span style="color:#bf616a;">cp -r</span><span> /var/www/wordpress/wp-content .
+</span><span style="color:#bf616a;">git</span><span> add .
+</span><span style="color:#bf616a;">git</span><span> commit</span><span style="color:#bf616a;"> -m </span><span>&quot;$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">date</span><span style="color:#a3be8c;">)</span><span>&quot;
+</span><span style="color:#bf616a;">git</span><span> push
+</span></code></pre>
+<p>The <code>w3x.py</code> script is an adaption of <a href="http://https://gist.github.com/ruslanosipov/b748a138389db2cda1e8">http://https://gist.github.com/ruslanosipov/b748a138389db2cda1e8</a><br />
+Now I need to make a static site with Hugo/Jekyll from the raw markdown files</p>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

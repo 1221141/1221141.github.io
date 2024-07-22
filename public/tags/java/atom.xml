@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - java</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/java/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-03-24T16:55:41+00:00</updated>
+    <id>https://1221141.github.io/tags/java/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Java vs Kotlin vs Clojure</title>
+        <published>2024-03-24T16:55:41+00:00</published>
+        <updated>2024-03-24T16:55:41+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240324165541-java-vs-kotlin-vs-clojure/"/>
+        <id>https://1221141.github.io/blog/20240324165541-java-vs-kotlin-vs-clojure/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240324165541-java-vs-kotlin-vs-clojure/">&lt;p&gt;Recently I&#x27;ve been attracted by clojure again. I&#x27;ve always wanted to learn it and use as my main programming language. The main selling point to me, other than being a lisp is that I don&#x27;t nee a full fledge IDE to work with. In my daily work I work with java and kotlin and I feel that I have a extensive rely on a IDE for work with it. In clojure I can use emacs&#x2F;vscode&#x2F;nvim in a more simple setup to work with it.&lt;br &#x2F;&gt;
+There are very nice things about the language, but I don&#x27;t think I have knowledge enough to make a full fledged product with it. It is more as a toy. And this is bad.&lt;br &#x2F;&gt;
+I need to work and create reliable and clean solutions. Coming from java kotlin makes that easier and I feel in a way more elegant. It has the type safety of java and the development joy of ruby.&lt;br &#x2F;&gt;
+I think I should focus on learning kotlin since it can be used both for web server development as for android development (which I have no previous experience).&lt;br &#x2F;&gt;
+Now that I wrote this I feel that clojure has not a lot of space. This makes me sad.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

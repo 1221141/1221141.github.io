@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Create a worpress post with a javascript bookmarklet
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/blogging">&#47;blogging&#47;</a>
+  
+  <a href="/tags/tracking">&#47;tracking&#47;</a>
+  
+  <a href="/tags/wordpress">&#47;wordpress&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-05T11:48:34</strong></p>
+<h1 id="the-problem">The problem</h1>
+<p>I want to track movies watched in my blog, for this I have a very simple template.</p>
+<ul>
+<li>
+<p>title: name of the movie</p>
+</li>
+<li>
+<p>content:</p>
+<ul>
+<li>poster of movie</li>
+<li>link to imdb</li>
+<li>date watched</li>
+<li>notes if needed</li>
+</ul>
+</li>
+</ul>
+<p>It is tiresome to do this by hand every time for a new movie.</p>
+<h1 id="solution">Solution</h1>
+<p>The solution I found was to have a bookmarklet that scrape the info from imdb page, then i make a request to my wordpress <code>post-new.php</code> page. It supports url parameters <code>post_title</code> and <code>content</code>, but it ignores the <code>tags</code>.</p>
+<p>For the tags the solution is to add some action hooks <a href="https://learn.wordpress.org/tutorial/wordpress-action-hooks/">https://learn.wordpress.org/tutorial/wordpress-action-hooks/</a>.</p>
+<p>Here is what i came up with.</p>
+<h2 id="bookmarklet">Bookmarklet</h2>
+<pre data-lang="javascript" style="background-color:#2b303b;color:#c0c5ce;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>javascript:(</span><span style="color:#b48ead;">function</span><span>() {
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">poster </span><span>= document.</span><span style="color:#96b5b4;">querySelector</span><span>(&#39;</span><span style="color:#a3be8c;">.ipc-image</span><span>&#39;).</span><span style="color:#bf616a;">srcset</span><span>.</span><span style="color:#96b5b4;">split</span><span>(&#39; &#39;)[</span><span style="color:#d08770;">4</span><span>];
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">title </span><span>= document.title;
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">url </span><span>= [</span><span style="color:#bf616a;">location</span><span>.protocol, &#39;</span><span style="color:#a3be8c;">//</span><span>&#39;, </span><span style="color:#bf616a;">location</span><span>.host, </span><span style="color:#bf616a;">location</span><span>.pathname].</span><span style="color:#96b5b4;">join</span><span>(&#39;&#39;);
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">dateWatched </span><span>= </span><span style="color:#8fa1b3;">prompt</span><span>(&#39;</span><span style="color:#a3be8c;">Enter the date watched (format: YYYY-MM-DD):</span><span>&#39;);
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">body </span><span>= [];
+</span><span>    </span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">push</span><span>(`</span><span style="color:#a3be8c;">![](${</span><span style="color:#bf616a;">poster</span><span style="color:#a3be8c;">})</span><span>`);
+</span><span>    </span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">push</span><span>(&quot;</span><span style="color:#96b5b4;">\n</span><span>&quot;);
+</span><span>    </span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">push</span><span>(`</span><span style="color:#a3be8c;">&lt;${</span><span style="color:#bf616a;">url</span><span style="color:#a3be8c;">}&gt;</span><span>`);
+</span><span>    </span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">push</span><span>(`</span><span style="color:#a3be8c;">Date Watched: ${</span><span style="color:#bf616a;">dateWatched</span><span style="color:#a3be8c;">}</span><span>`);
+</span><span>
+</span><span>
+</span><span>    window.</span><span style="color:#96b5b4;">open</span><span>(&#39;</span><span style="color:#a3be8c;">http://&lt;ip&gt;/wp-admin/post-new.php?post_title=</span><span>&#39; + </span><span style="color:#96b5b4;">encodeURIComponent</span><span>(</span><span style="color:#bf616a;">title</span><span>.</span><span style="color:#8fa1b3;">trim</span><span>()) + &#39;</span><span style="color:#a3be8c;">&amp;content=</span><span>&#39; + </span><span style="color:#96b5b4;">encodeURIComponent</span><span>(</span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">join</span><span>(&#39;</span><span style="color:#96b5b4;">\n</span><span>&#39;).</span><span style="color:#8fa1b3;">trim</span><span>()) + &#39;</span><span style="color:#a3be8c;">&amp;tags=movie,watched</span><span>&#39;);
+</span><span>})();
+</span></code></pre>
+<h2 id="functions-php">functions.php</h2>
+<p>The hooks need to be written in your theme <code>functions.php</code> file.</p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span>function log_when_new_post() {
+</span><span>        add_action(&#39;save_post&#39;, &#39;log_when_saved&#39;);
+</span><span>}
+</span><span>
+</span><span>
+</span><span>function log_when_saved($post_id) {
+</span><span>  if (defined(&#39;DOING_AUTOSAVE&#39;) &amp;&amp; DOING_AUTOSAVE) {
+</span><span>        return;
+</span><span>    }
+</span><span>
+</span><span>
+</span><span>    // Check if this is a valid post type (you can adjust the post types if needed)
+</span><span>    $post_type = get_post_type($post_id);
+</span><span>    if ($post_type != &#39;post&#39;) {
+</span><span>        return;
+</span><span>    }
+</span><span>
+</span><span>
+</span><span>    wp_set_post_tags($post_id, sanitize_text_field($_REQUEST[&#39;tags&#39;]), true); // Corrected wp_set_post_tags arguments
+</span><span>}
+</span><span>add_action(&#39;load-post-new.php&#39;, &#39;log_when_new_post&#39;);
+</span></code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>This one is for imdb movies, but the same can be modified for new types of page templates. Since the url parameters are the same, next I will create one for bookmark pages, youtube videos.</p>
+<p>Need to find another solution to update watched series, this might need to be different.</p>
+<h2 id="references">References</h2>
+<p><a href="https://www.youtube.com/watch?v=9GuJi8dYuAs">https://www.youtube.com/watch?v=9GuJi8dYuAs</a> <a href="https://wordpress.stackexchange.com/a/9190">https://wordpress.stackexchange.com/a/9190</a></p>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

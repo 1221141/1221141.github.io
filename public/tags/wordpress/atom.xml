@@ -1,0 +1,1030 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - wordpress</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/wordpress/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-04-21T10:24:14+00:00</updated>
+    <id>https://1221141.github.io/tags/wordpress/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Exclude some tag from being displayed</title>
+        <published>2024-04-21T10:24:14+00:00</published>
+        <updated>2024-04-21T10:24:14+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240421102414-exclude-some-tag-from-being-displayed/"/>
+        <id>https://1221141.github.io/blog/20240421102414-exclude-some-tag-from-being-displayed/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240421102414-exclude-some-tag-from-being-displayed/">&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;function exclude_from_loop($query) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &#x2F;&#x2F; Check if it&amp;#39;s the main query and not in admin area
+&lt;&#x2F;span&gt;&lt;span&gt;    if ($query-&amp;gt;is_main_query() &amp;amp;&amp;amp; !is_admin()) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &#x2F;&#x2F; Replace 123 with the ID of the tag you want to exclude
+&lt;&#x2F;span&gt;&lt;span&gt;        $exclude_tag_id = 102;
+&lt;&#x2F;span&gt;&lt;span&gt;        $$exclude_category_id = 105;
+&lt;&#x2F;span&gt;&lt;span&gt;        &#x2F;&#x2F; Exclude posts with the specified tag
+&lt;&#x2F;span&gt;&lt;span&gt;        $query-&amp;gt;set(&amp;#39;tag__not_in&amp;#39;, array($exclude_tag_id));
+&lt;&#x2F;span&gt;&lt;span&gt;		$query-&amp;gt;set(&amp;#39;category__not_in&amp;#39;, array($exclude_category_id));
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;add_action(&amp;#39;pre_get_posts&amp;#39;, &amp;#39;exclude_from_loop&amp;#39;);
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt; &lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Chris Aldrich: Micropub and WordPress: Custom Posting Applications - YouTube</title>
+        <published>2024-01-19T13:12:19+00:00</published>
+        <updated>2024-01-19T13:12:19+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119131219-chris-aldrich-micropub-and-wordpress-custom-posting-applications-youtube/"/>
+        <id>https://1221141.github.io/blog/20240119131219-chris-aldrich-micropub-and-wordpress-custom-posting-applications-youtube/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119131219-chris-aldrich-micropub-and-wordpress-custom-posting-applications-youtube/">&lt;p&gt;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=1fzelLcmglQ&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Parse WordPress to Markdown</title>
+        <published>2024-01-19T09:58:44+00:00</published>
+        <updated>2024-01-19T09:58:44+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/"/>
+        <id>https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/">&lt;p&gt;I already expressed my attempts to use wordpress but save a backup of the website in markdown (at least the posts) here &lt;a href=&quot;&#x2F;&quot;&gt;Managed&#x2F; to make a markdown backup from wordpress&lt;&#x2F;a&gt;, and here &lt;a href=&quot;&#x2F;&quot;&gt;Ensure&#x2F; Markdown is the true format of my posts&lt;&#x2F;a&gt;.&lt;br &#x2F;&gt;
+I believe I found the best way to achieve that. The backup is done in two stages.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;first-step&quot;&gt;First step&lt;&#x2F;h2&gt;
+&lt;p&gt;Create a backup in json. For this I wrote a python script that reads from the database and saves the dates, slugs, tags and content in a json. The content still in html.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;import mysql.connector
+&lt;&#x2F;span&gt;&lt;span&gt;import json
+&lt;&#x2F;span&gt;&lt;span&gt;import re
+&lt;&#x2F;span&gt;&lt;span&gt;import os
+&lt;&#x2F;span&gt;&lt;span&gt;import shutil
+&lt;&#x2F;span&gt;&lt;span&gt;from urllib.parse import unquote
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;# Replace these with your WordPress MySQL database credentials
+&lt;&#x2F;span&gt;&lt;span&gt;db_config = {
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;host&amp;#39;: &amp;#39;localhost&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;user&amp;#39;: &amp;#39;wordpress&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;password&amp;#39;: &amp;#39;password&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;database&amp;#39;: &amp;#39;wordpress&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;# Specify the base folder for saving posts and images
+&lt;&#x2F;span&gt;&lt;span&gt;base_folder = &amp;quot;posts&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;# Create the base folder if it doesn&amp;#39;t exist
+&lt;&#x2F;span&gt;&lt;span&gt;if not os.path.exists(base_folder):
+&lt;&#x2F;span&gt;&lt;span&gt;    os.makedirs(base_folder)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;attachment_paths = []
+&lt;&#x2F;span&gt;&lt;span&gt;def update_links(match):
+&lt;&#x2F;span&gt;&lt;span&gt;    link = match.group(0)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Check if the link is an attachment
+&lt;&#x2F;span&gt;&lt;span&gt;    if &amp;#39;wp-content&#x2F;uploads&amp;#39; in link:
+&lt;&#x2F;span&gt;&lt;span&gt;        # Extract the path after &#x2F;uploads
+&lt;&#x2F;span&gt;&lt;span&gt;        path_after_uploads = link.split(&amp;#39;&#x2F;uploads&amp;#39;, 1)[-1]
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Remove IP from the link and update to reference a folder
+&lt;&#x2F;span&gt;&lt;span&gt;        updated_link = f&amp;#39;&#x2F;uploads{path_after_uploads}&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Save the path of the attachment file to the list
+&lt;&#x2F;span&gt;&lt;span&gt;        attachment_paths.append(updated_link)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        return updated_link
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Check if the link is to another post
+&lt;&#x2F;span&gt;&lt;span&gt;    elif &amp;#39;192.168.1.217&amp;#39; in link:
+&lt;&#x2F;span&gt;&lt;span&gt;        # Extract the post slug from the link
+&lt;&#x2F;span&gt;&lt;span&gt;        slug = link.split(&amp;#39;&#x2F;&amp;#39;)[-1]
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Replace the link with the post slug
+&lt;&#x2F;span&gt;&lt;span&gt;        updated_link = f&amp;#39;&#x2F;{slug}&#x2F;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;        return updated_link
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # If it&amp;#39;s a different type of link, leave it unchanged
+&lt;&#x2F;span&gt;&lt;span&gt;    return link
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;# Establish a connection to the WordPress MySQL database
+&lt;&#x2F;span&gt;&lt;span&gt;try:
+&lt;&#x2F;span&gt;&lt;span&gt;    connection = mysql.connector.connect(**db_config)
+&lt;&#x2F;span&gt;&lt;span&gt;    cursor = connection.cursor()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Query to fetch post titles
+&lt;&#x2F;span&gt;&lt;span&gt;    query = &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;    SELECT
+&lt;&#x2F;span&gt;&lt;span&gt;        post_date AS creation_date,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_modified AS update_date,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_title AS title,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_name AS slug,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_content AS content,
+&lt;&#x2F;span&gt;&lt;span&gt;        GROUP_CONCAT(DISTINCT terms.name) AS tags,
+&lt;&#x2F;span&gt;&lt;span&gt;        post_status AS status
+&lt;&#x2F;span&gt;&lt;span&gt;    FROM
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_posts
+&lt;&#x2F;span&gt;&lt;span&gt;    LEFT JOIN
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_term_relationships ON wp_posts.ID = wp_term_relationships.object_id
+&lt;&#x2F;span&gt;&lt;span&gt;    LEFT JOIN
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_term_taxonomy ON wp_term_relationships.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id
+&lt;&#x2F;span&gt;&lt;span&gt;    LEFT JOIN
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_terms AS terms ON wp_term_taxonomy.term_id = terms.term_id
+&lt;&#x2F;span&gt;&lt;span&gt;    WHERE
+&lt;&#x2F;span&gt;&lt;span&gt;        post_type = &amp;#39;post&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;        AND post_status = &amp;#39;publish&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;    GROUP BY
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_posts.ID
+&lt;&#x2F;span&gt;&lt;span&gt;    ORDER BY
+&lt;&#x2F;span&gt;&lt;span&gt;        post_date DESC;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Execute the query
+&lt;&#x2F;span&gt;&lt;span&gt;    cursor.execute(query)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Fetch all rows
+&lt;&#x2F;span&gt;&lt;span&gt;    posts = cursor.fetchall()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    # Print the titles of all posts
+&lt;&#x2F;span&gt;&lt;span&gt;    for post in posts:
+&lt;&#x2F;span&gt;&lt;span&gt;        creation_date = post[0]
+&lt;&#x2F;span&gt;&lt;span&gt;        content = post[4]
+&lt;&#x2F;span&gt;&lt;span&gt;        slug = unquote(post[3])
+&lt;&#x2F;span&gt;&lt;span&gt;        # Generate filename based on creation date and slug
+&lt;&#x2F;span&gt;&lt;span&gt;        filename = f&amp;quot;{creation_date.strftime(&amp;#39;%Y%m%d%H%M%S&amp;#39;)}_{slug}.json&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Update links in the content
+&lt;&#x2F;span&gt;&lt;span&gt;        updated_content = re.sub(r&amp;#39;https?:&#x2F;&#x2F;192\.168\.1\.217\S+&amp;#39;, update_links, content)
+&lt;&#x2F;span&gt;&lt;span&gt;     # Create a dictionary with post details
+&lt;&#x2F;span&gt;&lt;span&gt;        post_data = {
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;creation_date&amp;quot;: creation_date.strftime(&amp;#39;%Y-%m-%d %H:%M:%S&amp;#39;),
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;update_date&amp;quot;: post[1].strftime(&amp;#39;%Y-%m-%d %H:%M:%S&amp;#39;),
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;title&amp;quot;: post[2],
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;slug&amp;quot;: slug,  
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;content&amp;quot;: updated_content.splitlines(),
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;tags&amp;quot;: post[5].split(&amp;#39;,&amp;#39;),
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;quot;status&amp;quot;: post[6]
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;        # Generate filename based on creation date and slug
+&lt;&#x2F;span&gt;&lt;span&gt;        filename = os.path.join(base_folder, f&amp;quot;{creation_date.strftime(&amp;#39;%Y%m%d%H%M%S&amp;#39;)}_{slug}.json&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        # Save post data to a JSON file in the &amp;quot;posts&amp;quot; folder
+&lt;&#x2F;span&gt;&lt;span&gt;        with open(filename, &amp;#39;w&amp;#39;) as json_file:
+&lt;&#x2F;span&gt;&lt;span&gt;            json.dump(post_data, json_file, ensure_ascii=False, indent=4)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        print(f&amp;quot;Saved {filename}&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;quot;\nAttachment Paths:&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;    for path in attachment_paths:
+&lt;&#x2F;span&gt;&lt;span&gt;        print(path)
+&lt;&#x2F;span&gt;&lt;span&gt;    uploads_folder = os.path.join(base_folder, &amp;quot;uploads&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    shutil.copytree(&amp;#39;&#x2F;var&#x2F;www&#x2F;wordpress&#x2F;wp-content&#x2F;uploads&amp;#39;,uploads_folder, dirs_exist_ok=True)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;except mysql.connector.Error as err:
+&lt;&#x2F;span&gt;&lt;span&gt;    print(f&amp;quot;Error: {err}&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;finally:
+&lt;&#x2F;span&gt;&lt;span&gt;    # Close the cursor and connection
+&lt;&#x2F;span&gt;&lt;span&gt;    if &amp;#39;cursor&amp;#39; in locals() and cursor is not None:
+&lt;&#x2F;span&gt;&lt;span&gt;        cursor.close()
+&lt;&#x2F;span&gt;&lt;span&gt;    if &amp;#39;connection&amp;#39; in locals() and connection.is_connected():
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;second-step&quot;&gt;Second step&lt;&#x2F;h2&gt;
+&lt;p&gt;Using javascript&#x2F;typescript and deno, run a script taht reads the jsons and converts to markdown. This is easily done using &lt;a href=&quot;https:&#x2F;&#x2F;unifiedjs.com&#x2F;&quot;&gt;unifiedjs&lt;&#x2F;a&gt; project.&lt;br &#x2F;&gt;
+The script even adds a &lt;code&gt;.&lt;&#x2F;code&gt; for the internal links, making sure that they are rendered ok in github.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;import rehypeParse from &amp;quot;npm:rehype-parse&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import rehypeRemark from &amp;quot;npm:rehype-remark&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import remarkStringify from &amp;quot;npm:remark-stringify&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import remarkGfm from &amp;quot;npm:remark-gfm&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import removeComments from &amp;quot;npm:remark-remove-comments&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import rehypeStringify from &amp;quot;npm:rehype-stringify&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;import * as path from &amp;quot;https:&#x2F;&#x2F;deno.land&#x2F;std@0.97.0&#x2F;path&#x2F;mod.ts&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;import { copy, ensureDir } from &amp;quot;https:&#x2F;&#x2F;deno.land&#x2F;std@0.97.0&#x2F;fs&#x2F;mod.ts&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;import { unified } from &amp;quot;npm:unified&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;try {
+&lt;&#x2F;span&gt;&lt;span&gt;  let dirName = &amp;quot;.&#x2F;posts&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;  let mdDirName = &amp;quot;.&#x2F;md&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;  const dirEntries = await Deno.readDir(dirName);
+&lt;&#x2F;span&gt;&lt;span&gt;  const uploadsSet = new Set&amp;lt;string&amp;gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  for await (const entry of dirEntries) {
+&lt;&#x2F;span&gt;&lt;span&gt;    if (entry.isFile) {
+&lt;&#x2F;span&gt;&lt;span&gt;      const filePath = `${dirName}&#x2F;${entry.name}`;
+&lt;&#x2F;span&gt;&lt;span&gt;      const fileContent = await Deno.readTextFile(filePath);
+&lt;&#x2F;span&gt;&lt;span&gt;      const fileJson = await JSON.parse(fileContent);
+&lt;&#x2F;span&gt;&lt;span&gt;      const mdFile = await parseToMd(fileJson, uploadsSet);
+&lt;&#x2F;span&gt;&lt;span&gt;      const mdFilePath = `${mdDirName}&#x2F;${path.parse(entry.name).name + &amp;quot;.md&amp;quot;}`;
+&lt;&#x2F;span&gt;&lt;span&gt;      await Deno.writeTextFile(mdFilePath, mdFile);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;  }
+&lt;&#x2F;span&gt;&lt;span&gt;  &#x2F;&#x2F; Print the set of links after the main loop
+&lt;&#x2F;span&gt;&lt;span&gt;  await Promise.all(Array.from(uploadsSet).map(async (filePath) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    const sourcePath = `.&#x2F;posts${filePath}`;
+&lt;&#x2F;span&gt;&lt;span&gt;    const destinationPath = `.&#x2F;md${filePath}`;
+&lt;&#x2F;span&gt;&lt;span&gt;    await ensureDir(path.dirname(destinationPath));
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    await copy(sourcePath, destinationPath, { overwrite: true });
+&lt;&#x2F;span&gt;&lt;span&gt;  }));
+&lt;&#x2F;span&gt;&lt;span&gt;console.log(&amp;#39;md done&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;} catch (error) {
+&lt;&#x2F;span&gt;&lt;span&gt;  console.log(error);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;async function parseToMd(jsonFile, uploadsSet) {
+&lt;&#x2F;span&gt;&lt;span&gt;  let md = &amp;quot;&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;  let frontmatter = `---
+&lt;&#x2F;span&gt;&lt;span&gt;title: &amp;quot;${jsonFile.title}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;created: &amp;quot;${jsonFile.creation_date}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;lastmod: &amp;quot;${jsonFile.update_date}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;slug: &amp;quot;${jsonFile.slug}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;draft: ${jsonFile.status === &amp;quot;published&amp;quot; ? false : true}
+&lt;&#x2F;span&gt;&lt;span&gt;tags:
+&lt;&#x2F;span&gt;&lt;span&gt;`;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  for (const tag of jsonFile.tags) {
+&lt;&#x2F;span&gt;&lt;span&gt;    frontmatter += `  - ${tag}\n`;
+&lt;&#x2F;span&gt;&lt;span&gt;  }
+&lt;&#x2F;span&gt;&lt;span&gt;  frontmatter += `---\n`;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  let cnt = jsonFile.content.map((line) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    if (line === &amp;quot;&amp;quot;) {
+&lt;&#x2F;span&gt;&lt;span&gt;      line = &amp;quot;\n&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    return line;
+&lt;&#x2F;span&gt;&lt;span&gt;  }).join(&amp;quot;\n\n&amp;quot;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  const body = await unified()
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(rehypeParse, { fragment: true })
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(() =&amp;gt; prependDotToImagePath(uploadsSet))
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(rehypeRemark)
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(remarkGfm)
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(removeComments)
+&lt;&#x2F;span&gt;&lt;span&gt;    .use(remarkStringify)
+&lt;&#x2F;span&gt;&lt;span&gt;    .process(cnt);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  const mdContent = String(body);
+&lt;&#x2F;span&gt;&lt;span&gt;  return frontmatter + &amp;quot;\n&amp;quot; + mdContent;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;function prependDotToImagePath(uploadsSet) {
+&lt;&#x2F;span&gt;&lt;span&gt;  const visit = (node) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    if (node.type === &amp;quot;element&amp;quot; &amp;amp;&amp;amp; node.properties) {
+&lt;&#x2F;span&gt;&lt;span&gt;      &#x2F;&#x2F; Handle img tags
+&lt;&#x2F;span&gt;&lt;span&gt;      if (
+&lt;&#x2F;span&gt;&lt;span&gt;        node.tagName === &amp;quot;img&amp;quot; &amp;amp;&amp;amp; node.properties.src &amp;amp;&amp;amp;
+&lt;&#x2F;span&gt;&lt;span&gt;        node.properties.src.startsWith(&amp;quot;&#x2F;uploads&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;      ) {
+&lt;&#x2F;span&gt;&lt;span&gt;        uploadsSet.add(node.properties.src);
+&lt;&#x2F;span&gt;&lt;span&gt;        node.properties.src = `.${node.properties.src}`;
+&lt;&#x2F;span&gt;&lt;span&gt;      }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &#x2F;&#x2F; Handle a tags
+&lt;&#x2F;span&gt;&lt;span&gt;      if (
+&lt;&#x2F;span&gt;&lt;span&gt;        node.tagName === &amp;quot;a&amp;quot; &amp;amp;&amp;amp; node.properties.href &amp;amp;&amp;amp;
+&lt;&#x2F;span&gt;&lt;span&gt;        node.properties.href.startsWith(&amp;quot;&#x2F;uploads&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;      ) {
+&lt;&#x2F;span&gt;&lt;span&gt;        uploadsSet.add(node.properties.href);
+&lt;&#x2F;span&gt;&lt;span&gt;        node.properties.href = `.${node.properties.href}`;
+&lt;&#x2F;span&gt;&lt;span&gt;      }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    if (node.children) {
+&lt;&#x2F;span&gt;&lt;span&gt;      node.children.forEach(visit);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;  };
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  return (tree) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    tree.children.forEach(visit);
+&lt;&#x2F;span&gt;&lt;span&gt;  };
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Might need to update scripts when i find errors, but so far is good enough.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Embed blocks – Documentation – WordPress.org</title>
+        <published>2024-01-18T15:15:11+00:00</published>
+        <updated>2024-01-18T15:15:11+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240118151511-embed-blocks-documentation-wordpress-org/"/>
+        <id>https://1221141.github.io/blog/20240118151511-embed-blocks-documentation-wordpress-org/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240118151511-embed-blocks-documentation-wordpress-org/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;wordpress.org&#x2F;documentation&#x2F;category&#x2F;embed-blocks&#x2F;&quot;&gt;https:&#x2F;&#x2F;wordpress.org&#x2F;documentation&#x2F;category&#x2F;embed-blocks&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;Apparently WordPress has several embed things. Only adding the url makes the post show a embed version.&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;Found this list.&lt;&#x2F;p&gt;
+&lt;p&gt;It works for Spotify, YouTube and amazon kindle books. &lt;&#x2F;p&gt;
+&lt;p&gt;e.g. adding this link &lt;code&gt;https:&#x2F;&#x2F;www.amazon.com&#x2F;Are-Legion-Bob-Bobiverse-Book-ebook&#x2F;dp&#x2F;B01LWAESYQ?ref=d6k_applink_bb_dls&amp;amp;dplnkId=15deb74f-d96f-4358-a119-2e835eb62ac9&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;You see this:&lt;&#x2F;p&gt;
+&lt;p&gt;https:&#x2F;&#x2F;www.amazon.com&#x2F;Are-Legion-Bob-Bobiverse-Book-ebook&#x2F;dp&#x2F;B01LWAESYQ?ref=d6k_applink_bb_dls&amp;amp;dplnkId=15deb74f-d96f-4358-a119-2e835eb62ac9&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>How to always open the editor in the classic editor</title>
+        <published>2024-01-15T13:27:36+00:00</published>
+        <updated>2024-01-15T13:27:36+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240115132736-how-to-always-open-the-editor-in-the-classic-editor/"/>
+        <id>https://1221141.github.io/blog/20240115132736-how-to-always-open-the-editor-in-the-classic-editor/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240115132736-how-to-always-open-the-editor-in-the-classic-editor/">&lt;p&gt;In WordPress there are two editors, the Classic one and the Block one.&lt;br &#x2F;&gt;
+When I am at the computer I like to use the classic editor (one of the few plugins I have). But when I&#x27;m on my phone I use the android app, and that uses the block editor.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-problem&quot;&gt;The problem&lt;&#x2F;h2&gt;
+&lt;p&gt;If I create a post on my phone and try to open in the computer it will open in the block editor. Unless I specific click (&quot;edit with classic editor&quot;)&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;solution&quot;&gt;Solution&lt;&#x2F;h2&gt;
+&lt;p&gt;Add a function and a hook in the theme &lt;code&gt;functions.php&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;function add_classic_editor_forget_parameter() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &#x2F;&#x2F; Check if we are on the post edit screen
+&lt;&#x2F;span&gt;&lt;span&gt;    if (is_admin() &amp;amp;&amp;amp; isset($_GET[&amp;#39;post&amp;#39;]) &amp;amp;&amp;amp; get_post_type($_GET[&amp;#39;post&amp;#39;]) === &amp;#39;post&amp;#39;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &#x2F;&#x2F; Enqueue jQuery
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_enqueue_script(&amp;#39;jquery&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &#x2F;&#x2F; Add a custom script
+&lt;&#x2F;span&gt;&lt;span&gt;        wp_add_inline_script(&amp;#39;jquery&amp;#39;, &amp;#39;jQuery(document).ready(function($) {
+&lt;&#x2F;span&gt;&lt;span&gt;            var currentUrl = window.location.href;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &#x2F;&#x2F; Check if the classic-editor__forget parameter is not already present
+&lt;&#x2F;span&gt;&lt;span&gt;            if (currentUrl.indexOf(&amp;quot;classic-editor__forget&amp;quot;) === -1) {
+&lt;&#x2F;span&gt;&lt;span&gt;                &#x2F;&#x2F; Add the parameter to the URL
+&lt;&#x2F;span&gt;&lt;span&gt;                var newUrl = currentUrl + &amp;quot;&amp;amp;classic-editor__forget&amp;quot;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                &#x2F;&#x2F; Redirect to the new URL
+&lt;&#x2F;span&gt;&lt;span&gt;                window.location.href = newUrl;
+&lt;&#x2F;span&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;span&gt;        });&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;add_action(&amp;#39;admin_enqueue_scripts&amp;#39;, &amp;#39;add_classic_editor_forget_parameter&amp;#39;);
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This way, every time I open a post to edit it will open in the classic editor.``&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Can&#x27;t find a good blog solution</title>
+        <published>2024-01-13T14:24:47+00:00</published>
+        <updated>2024-01-13T14:24:47+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240113142447-cant-find-a-good-blog-solution/"/>
+        <id>https://1221141.github.io/blog/20240113142447-cant-find-a-good-blog-solution/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240113142447-cant-find-a-good-blog-solution/">&lt;p&gt;Now I am enjoying using WordPress. I can use on my phone and on the web. I have a selfhosted solution with minimal plugins.&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;It has most of what I expected, I can attach media and write posts. I have different types of posts. I can post from my phone using the jetpack android app, or I can use the mobile admin dashboard.&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;The problem is that the content is not in markdown. I am not sure if this is a major problem. I can backup the content as raw html, and parse in the future. But to add code snippets is a pain.&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;I need to write some tests to see how bad this is. But hopefully I can think of something better.&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt; &lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>TinyMCE Custom Buttons « WordPress Codex</title>
+        <published>2024-01-13T00:44:54+00:00</published>
+        <updated>2024-01-13T00:44:54+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240113004454-tinymce-custom-buttons-wordpress-codex/"/>
+        <id>https://1221141.github.io/blog/20240113004454-tinymce-custom-buttons-wordpress-codex/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240113004454-tinymce-custom-buttons-wordpress-codex/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;codex.wordpress.org&#x2F;TinyMCE_Custom_Buttons&quot;&gt;https:&#x2F;&#x2F;codex.wordpress.org&#x2F;TinyMCE_Custom_Buttons&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Save IMDB Movie that was watched</title>
+        <published>2024-01-09T18:17:59+00:00</published>
+        <updated>2024-01-09T18:17:59+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240109181759-save-imdb-movie-that-was-watched/"/>
+        <id>https://1221141.github.io/blog/20240109181759-save-imdb-movie-that-was-watched/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240109181759-save-imdb-movie-that-was-watched/">&lt;p&gt;&lt;strong&gt;bookmarklet&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;javascript&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-javascript &quot;&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span&gt;javascript:(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;poster &lt;&#x2F;span&gt;&lt;span&gt;= document.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;querySelector&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.ipc-image&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;srcset&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;split&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39; &amp;#39;)[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title &lt;&#x2F;span&gt;&lt;span&gt;= document.title;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;url &lt;&#x2F;span&gt;&lt;span&gt;= [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;location&lt;&#x2F;span&gt;&lt;span&gt;.protocol, &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;location&lt;&#x2F;span&gt;&lt;span&gt;.host, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;location&lt;&#x2F;span&gt;&lt;span&gt;.pathname].&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;join&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dateWatched &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;prompt&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Enter the date watched (format: YYYY-MM-DD):&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body &lt;&#x2F;span&gt;&lt;span&gt;= [];
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(`&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;img src=&amp;quot;${&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;poster&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&amp;quot; &#x2F;&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;`);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;br&#x2F;&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(`&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;a href=&amp;quot;${&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;url&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&amp;quot;&amp;gt;${&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;url&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&amp;lt;&#x2F;a&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;`);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(`&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;p&amp;gt;Date Watched: ${&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dateWatched&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&amp;lt;&#x2F;p&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;`);
+&lt;&#x2F;span&gt;&lt;span&gt;    window.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;open&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;imdb.php?title=&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&#x2F; + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;encodeURIComponent&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;trim&lt;&#x2F;span&gt;&lt;span&gt;()) + &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;amp;body=&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;encodeURIComponent&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;join&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;trim&lt;&#x2F;span&gt;&lt;span&gt;()) + &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;amp;tags=movie,watched,tracking&amp;amp;category=tracking&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;})();
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;create a file in the &lt;code&gt;&#x2F;var&#x2F;www&#x2F;wordpress&lt;&#x2F;code&gt; folder e.g.: &lt;code&gt;&#x2F;var&#x2F;www&#x2F;wordpress&#x2F;imdb.php&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Load WordPress
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;define&lt;&#x2F;span&gt;&lt;span&gt;( &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;WP_DEBUG&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true &lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;define&lt;&#x2F;span&gt;&lt;span&gt;( &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;WP_DEBUG_DISPLAY&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false &lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;define&lt;&#x2F;span&gt;&lt;span&gt;( &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;WP_DEBUG_LOG&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true &lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;define&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;WP_USE_THEMES&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;require&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;wp-load.php&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Check if title, body, tags, and category are provided in the URL
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;isset&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_GET&lt;&#x2F;span&gt;&lt;span&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;title&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;]) &amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;isset&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_GET&lt;&#x2F;span&gt;&lt;span&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;]) &amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;isset&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_GET&lt;&#x2F;span&gt;&lt;span&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tags&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;]) &amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;isset&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_GET&lt;&#x2F;span&gt;&lt;span&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;category&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;])) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Get values from URL parameters
+&lt;&#x2F;span&gt;&lt;span&gt;    $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_title &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sanitize_text_field&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_GET&lt;&#x2F;span&gt;&lt;span&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;title&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;]);
+&lt;&#x2F;span&gt;&lt;span&gt;    $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_content &lt;&#x2F;span&gt;&lt;span&gt;= $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_GET&lt;&#x2F;span&gt;&lt;span&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;];
+&lt;&#x2F;span&gt;&lt;span&gt;    $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_tags &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sanitize_text_field&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_GET&lt;&#x2F;span&gt;&lt;span&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tags&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;]);
+&lt;&#x2F;span&gt;&lt;span&gt;    $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_category &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sanitize_text_field&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_GET&lt;&#x2F;span&gt;&lt;span&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;category&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;]);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Print the values passed
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Title: &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; . $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_title &lt;&#x2F;span&gt;&lt;span&gt;. &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;br&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Body: &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; . &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;nl2br&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_content&lt;&#x2F;span&gt;&lt;span&gt;) . &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;br&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Use nl2br only when displaying
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Tags: &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; . $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_tags &lt;&#x2F;span&gt;&lt;span&gt;. &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;br&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tags_array &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;explode&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_tags&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; You can also print the array of tags if needed
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Tags Array: &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;print_r&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tags_array&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;category_id &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;get_cat_ID&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_category&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;category_id &lt;&#x2F;span&gt;&lt;span&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;category_id &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;wp_create_category&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_category&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Create the post data array
+&lt;&#x2F;span&gt;&lt;span&gt;    $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_data &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;array&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;post_title&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;   =&amp;gt; $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_title&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;post_content&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; =&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;nl2br&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_content&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;post_status&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;  =&amp;gt; &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;publish&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;post_type&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;    =&amp;gt; &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;post&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;,
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tags_input&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;   =&amp;gt; $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tags_array&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;post_category&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; =&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;array&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;category_id&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;    );
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Insert the post into the database
+&lt;&#x2F;span&gt;&lt;span&gt;    $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_id &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;wp_insert_post&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_data&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Check if the post was created successfully
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_id&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Redirect to the newly created post
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;wp_redirect&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;get_permalink&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;post_id&lt;&#x2F;span&gt;&lt;span&gt;));
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;exit&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Error creating post.&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Display a message if parameters are missing
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Please provide title, body, tags, and category as URL parameters.&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Get a list of all posts in wordpress</title>
+        <published>2024-01-08T21:49:51+00:00</published>
+        <updated>2024-01-08T21:49:51+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240108214951-get-a-list-of-all-posts-in-wordpress/"/>
+        <id>https://1221141.github.io/blog/20240108214951-get-a-list-of-all-posts-in-wordpress/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240108214951-get-a-list-of-all-posts-in-wordpress/">&lt;ol&gt;
+&lt;li&gt;create a &lt;code&gt;.php&lt;&#x2F;code&gt; file in wordpress root. make sure that the &lt;code&gt;www-data&lt;&#x2F;code&gt; user owns it.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Load WordPress
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;define&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;WP_USE_THEMES&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;require&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;wp-load.php&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Fetch posts from WordPress
+&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;args &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;array&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;post_type&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; =&amp;gt; &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;post&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Change to &amp;#39;page&amp;#39; if you want to include pages
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;posts_per_page&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; =&amp;gt; -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Display all posts
+&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;query &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;WP_Query&lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Start HTML output
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;html&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;head&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;WordPress Blog Posts&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;script &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;src&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;https:&#x2F;&#x2F;code.jquery.com&#x2F;jquery-3.6.4.min.js&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;script&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;head&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Check if there are posts
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;query&lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;have_posts&lt;&#x2F;span&gt;&lt;span&gt;()) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;h2&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;Blog Posts&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;h2&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;input &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;type&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;text&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;id&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;searchInput&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;placeholder&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Search posts...&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ul&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Loop through each post and display its title
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;($&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;query&lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;have_posts&lt;&#x2F;span&gt;&lt;span&gt;()) {
+&lt;&#x2F;span&gt;&lt;span&gt;        $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;query&lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;the_post&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;li&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;href&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;get_permalink&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(); &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;get_the_title&lt;&#x2F;span&gt;&lt;span&gt;(); &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;li&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ul&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;wp_reset_postdata&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;No posts found.&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; JavaScript for fuzzy search and open post on Enter
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;script&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;jQuery&lt;&#x2F;span&gt;&lt;span&gt;(document).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ready&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span&gt;($) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;#searchInput&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;on&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;input&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Your existing JavaScript code here
+&lt;&#x2F;span&gt;&lt;span&gt;        });
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;#searchInput&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;on&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;keyup&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span&gt;(event) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Your existing JavaScript code here
+&lt;&#x2F;span&gt;&lt;span&gt;        });
+&lt;&#x2F;span&gt;&lt;span&gt;    });
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;script&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; End HTML output
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;html&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;?&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>No point in waste time with blog theme</title>
+        <published>2024-01-07T19:20:17+00:00</published>
+        <updated>2024-01-07T19:20:17+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240107192017-no-point-in-waste-time-with-blog-theme/"/>
+        <id>https://1221141.github.io/blog/20240107192017-no-point-in-waste-time-with-blog-theme/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240107192017-no-point-in-waste-time-with-blog-theme/">&lt;p&gt;Now that I think of, there is no need to waste time tinkering with blog themes. The whole point of try a CMS was to make it easy to write down my thoughts. I will just use the simplest theme I can find and not was time with it.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Save bookmark page to wordpress</title>
+        <published>2024-01-06T16:42:04+00:00</published>
+        <updated>2024-01-06T16:42:04+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240106164204-save-bookmark-page-to-wordpress/"/>
+        <id>https://1221141.github.io/blog/20240106164204-save-bookmark-page-to-wordpress/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240106164204-save-bookmark-page-to-wordpress/">&lt;p&gt;As a continuation of the what I wrote here: &lt;a href=&quot;&#x2F;20240105114834_create-a-worpress-post-with-a-javascript-bookmarklet&quot;&gt;Create&#x2F; a worpress post with a javascript bookmarklet&lt;&#x2F;a&gt; I created a bookmark&lt;strong&gt;let&lt;&#x2F;strong&gt; to create bookmarks.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;javascript: (function() {
+&lt;&#x2F;span&gt;&lt;span&gt;    var title = document.title;
+&lt;&#x2F;span&gt;&lt;span&gt;    if (!title) return;
+&lt;&#x2F;span&gt;&lt;span&gt;    var lines = [document.URL];
+&lt;&#x2F;span&gt;&lt;span&gt;    var quote = window.getSelection().toString();
+&lt;&#x2F;span&gt;&lt;span&gt;    if (quote.trim()) lines = lines.concat(quote.split(&#x2F;\n&#x2F;g).map(function(line) {
+&lt;&#x2F;span&gt;&lt;span&gt;        return &amp;#39;&amp;lt;blockquote&amp;gt;&amp;#39; + line + &amp;#39;&amp;lt;&#x2F;blockquote&amp;gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;    }));
+&lt;&#x2F;span&gt;&lt;span&gt;    lines.push(&amp;#39;&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;    var body = encodeURIComponent(lines.join(&amp;#39;\n&amp;#39;));    window.open(&amp;#39;&#x2F;imdb.php?title=&amp;#39;&#x2F; + encodeURIComponent(title.trim()) + &amp;#39;&amp;amp;body=&amp;#39; + encodeURIComponent(lines.join(&amp;#39;\n&amp;#39;).trim()) + &amp;#39;&amp;amp;tags=bookmark&amp;amp;category=bookmark&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;})();
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Making the theme mobile friendly</title>
+        <published>2024-01-06T12:21:37+00:00</published>
+        <updated>2024-01-06T12:21:37+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240106122137-making-the-theme-mobile-friendly/"/>
+        <id>https://1221141.github.io/blog/20240106122137-making-the-theme-mobile-friendly/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240106122137-making-the-theme-mobile-friendly/">&lt;p&gt;Since I am using an old theme for my blog, it is not mobile friendly.&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;Spent some time thinking to make the sidebar disappear and the content take the full space when opening in mobile.&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;uploads&#x2F;2024&#x2F;01&#x2F;wp-17045400583254722922824378001443.jpg&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;Now I need to make some fonts bigger.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Create a worpress post with a javascript bookmarklet</title>
+        <published>2024-01-05T11:48:34+00:00</published>
+        <updated>2024-01-05T11:48:34+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240105114834-create-a-worpress-post-with-a-javascript-bookmarklet/"/>
+        <id>https://1221141.github.io/blog/20240105114834-create-a-worpress-post-with-a-javascript-bookmarklet/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240105114834-create-a-worpress-post-with-a-javascript-bookmarklet/">&lt;h1 id=&quot;the-problem&quot;&gt;The problem&lt;&#x2F;h1&gt;
+&lt;p&gt;I want to track movies watched in my blog, for this I have a very simple template.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;title: name of the movie&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;content:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;poster of movie&lt;&#x2F;li&gt;
+&lt;li&gt;link to imdb&lt;&#x2F;li&gt;
+&lt;li&gt;date watched&lt;&#x2F;li&gt;
+&lt;li&gt;notes if needed&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;It is tiresome to do this by hand every time for a new movie.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;solution&quot;&gt;Solution&lt;&#x2F;h1&gt;
+&lt;p&gt;The solution I found was to have a bookmarklet that scrape the info from imdb page, then i make a request to my wordpress &lt;code&gt;post-new.php&lt;&#x2F;code&gt; page. It supports url parameters &lt;code&gt;post_title&lt;&#x2F;code&gt; and &lt;code&gt;content&lt;&#x2F;code&gt;, but it ignores the &lt;code&gt;tags&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;For the tags the solution is to add some action hooks &lt;a href=&quot;https:&#x2F;&#x2F;learn.wordpress.org&#x2F;tutorial&#x2F;wordpress-action-hooks&#x2F;&quot;&gt;https:&#x2F;&#x2F;learn.wordpress.org&#x2F;tutorial&#x2F;wordpress-action-hooks&#x2F;&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Here is what i came up with.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;bookmarklet&quot;&gt;Bookmarklet&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;javascript&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-javascript &quot;&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span&gt;javascript:(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;poster &lt;&#x2F;span&gt;&lt;span&gt;= document.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;querySelector&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.ipc-image&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;srcset&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;split&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39; &amp;#39;)[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title &lt;&#x2F;span&gt;&lt;span&gt;= document.title;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;url &lt;&#x2F;span&gt;&lt;span&gt;= [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;location&lt;&#x2F;span&gt;&lt;span&gt;.protocol, &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;location&lt;&#x2F;span&gt;&lt;span&gt;.host, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;location&lt;&#x2F;span&gt;&lt;span&gt;.pathname].&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;join&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dateWatched &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;prompt&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Enter the date watched (format: YYYY-MM-DD):&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body &lt;&#x2F;span&gt;&lt;span&gt;= [];
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(`&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;![](${&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;poster&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;})&lt;&#x2F;span&gt;&lt;span&gt;`);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(`&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;${&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;url&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;`);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;push&lt;&#x2F;span&gt;&lt;span&gt;(`&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Date Watched: ${&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dateWatched&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;`);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    window.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;open&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;http:&#x2F;&#x2F;&amp;lt;ip&amp;gt;&#x2F;wp-admin&#x2F;post-new.php?post_title=&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;encodeURIComponent&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;trim&lt;&#x2F;span&gt;&lt;span&gt;()) + &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;amp;content=&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;encodeURIComponent&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;join&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;trim&lt;&#x2F;span&gt;&lt;span&gt;()) + &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;amp;tags=movie,watched&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;})();
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;functions-php&quot;&gt;functions.php&lt;&#x2F;h2&gt;
+&lt;p&gt;The hooks need to be written in your theme &lt;code&gt;functions.php&lt;&#x2F;code&gt; file.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span&gt;function log_when_new_post() {
+&lt;&#x2F;span&gt;&lt;span&gt;        add_action(&amp;#39;save_post&amp;#39;, &amp;#39;log_when_saved&amp;#39;);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;function log_when_saved($post_id) {
+&lt;&#x2F;span&gt;&lt;span&gt;  if (defined(&amp;#39;DOING_AUTOSAVE&amp;#39;) &amp;amp;&amp;amp; DOING_AUTOSAVE) {
+&lt;&#x2F;span&gt;&lt;span&gt;        return;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &#x2F;&#x2F; Check if this is a valid post type (you can adjust the post types if needed)
+&lt;&#x2F;span&gt;&lt;span&gt;    $post_type = get_post_type($post_id);
+&lt;&#x2F;span&gt;&lt;span&gt;    if ($post_type != &amp;#39;post&amp;#39;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        return;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    wp_set_post_tags($post_id, sanitize_text_field($_REQUEST[&amp;#39;tags&amp;#39;]), true); &#x2F;&#x2F; Corrected wp_set_post_tags arguments
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;add_action(&amp;#39;load-post-new.php&amp;#39;, &amp;#39;log_when_new_post&amp;#39;);
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;This one is for imdb movies, but the same can be modified for new types of page templates. Since the url parameters are the same, next I will create one for bookmark pages, youtube videos.&lt;&#x2F;p&gt;
+&lt;p&gt;Need to find another solution to update watched series, this might need to be different.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;references&quot;&gt;References&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=9GuJi8dYuAs&quot;&gt;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=9GuJi8dYuAs&lt;&#x2F;a&gt; &lt;a href=&quot;https:&#x2F;&#x2F;wordpress.stackexchange.com&#x2F;a&#x2F;9190&quot;&gt;https:&#x2F;&#x2F;wordpress.stackexchange.com&#x2F;a&#x2F;9190&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Programmatically creating a WordPress page</title>
+        <published>2024-01-04T23:53:25+00:00</published>
+        <updated>2024-01-04T23:53:25+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240104235325-programmatically-creating-a-wordpress-page/"/>
+        <id>https://1221141.github.io/blog/20240104235325-programmatically-creating-a-wordpress-page/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240104235325-programmatically-creating-a-wordpress-page/">&lt;p&gt;I recently learned that WordPress provides a JSON API. This way I could consume and also post new content via API.&lt;&#x2F;p&gt;
+&lt;p&gt;Might want to investigate this to help me when I want to track movies that I watched. Maybe a bookmarklet from IMDb or tmdb that would create the page for me.&lt;&#x2F;p&gt;
+&lt;p&gt;Example in this video:&lt;&#x2F;p&gt;
+&lt;p&gt;https:&#x2F;&#x2F;youtu.be&#x2F;_w4Ok-lI48g?si=hA9iUsj2z2oAjh6w&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;I found another way to do that.&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;add a php file in the wordpress root&lt;&#x2F;li&gt;
+&lt;li&gt;this file is now available as wp-ip&#x2F;file.php&lt;&#x2F;li&gt;
+&lt;li&gt;pass the parameters in a get request and use the &lt;code&gt;wp_insert_post&lt;&#x2F;code&gt; to create a post programatically.&lt;&#x2F;li&gt;
+&lt;li&gt;might be more unsafe, but ok for a offline blog.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Edit theme via wordpress gui</title>
+        <published>2024-01-04T22:54:10+00:00</published>
+        <updated>2024-01-04T22:54:10+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240104225410-edit-theme-via-wordpress-gui/"/>
+        <id>https://1221141.github.io/blog/20240104225410-edit-theme-via-wordpress-gui/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240104225410-edit-theme-via-wordpress-gui/">&lt;p&gt;In order to edit a theme in the wordpress gui go to &lt;code&gt;Appearance &amp;gt; Theme File Editor&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;In order to have an update button the correct used should be &lt;code&gt;www-data&lt;&#x2F;code&gt;. To fix this go to the wp-content page for your theme and run this.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;chown&lt;&#x2F;span&gt;&lt;span&gt; www-data:www-data&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;  -R &lt;&#x2F;span&gt;&lt;span&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Let Apache be owner
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;find&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -type&lt;&#x2F;span&gt;&lt;span&gt; d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -exec&lt;&#x2F;span&gt;&lt;span&gt; chmod 755 {} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Change directory permissions rwxr-xr-x
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;find&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -type&lt;&#x2F;span&gt;&lt;span&gt; f&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -exec&lt;&#x2F;span&gt;&lt;span&gt; chmod 644 {} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Change file permissions rw-r--r--
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Source: &lt;em&gt;&lt;a href=&quot;https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;18352682&#x2F;correct-file-permissions-for-wordpress&quot;&gt;php - Correct file permissions for WordPress - Stack Overflow&lt;&#x2F;a&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Editing wordpress posts with markdown</title>
+        <published>2024-01-04T18:25:00+00:00</published>
+        <updated>2024-01-04T18:25:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240104182500-editing-wordpress-posts-with-markdown/"/>
+        <id>https://1221141.github.io/blog/20240104182500-editing-wordpress-posts-with-markdown/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240104182500-editing-wordpress-posts-with-markdown/">&lt;p&gt;Found this amazing plugin &lt;a href=&quot;http:&#x2F;&#x2F;https:&#x2F;&#x2F;github.com&#x2F;terrylinooo&#x2F;githuber-md&quot;&gt;http:&#x2F;&#x2F;https:&#x2F;&#x2F;github.com&#x2F;terrylinooo&#x2F;githuber-md&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;This allows me to edit pages in markdown. And my export plugin seems to not break the converted html from it.&lt;&#x2F;p&gt;
+&lt;p&gt;Really enjoying editing in markdow from here.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;terrylinooo&#x2F;githuber-md&#x2F;master&#x2F;assets&#x2F;images&#x2F;screenshot-1.gif&quot;&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;terrylinooo&#x2F;githuber-md&#x2F;master&#x2F;assets&#x2F;images&#x2F;screenshot-1.gif&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Managed to make a markdown backup from wordpress</title>
+        <published>2024-01-04T16:35:52+00:00</published>
+        <updated>2024-01-04T16:35:52+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240104163552-managed-to-make-a-markdown-backup-from-wordpress/"/>
+        <id>https://1221141.github.io/blog/20240104163552-managed-to-make-a-markdown-backup-from-wordpress/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240104163552-managed-to-make-a-markdown-backup-from-wordpress/">&lt;p&gt;As I wrote in a previous post, I want to use wordpress but still want to make markdown backups from my posts to make it future proof.&lt;br &#x2F;&gt;
+I think I managed to get this working using python and the &lt;code&gt;wp export&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;wp&lt;&#x2F;span&gt;&lt;span&gt; export&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --allow-root --with_attachments --skip_comments --path&lt;&#x2F;span&gt;&lt;span&gt;=&#x2F;var&#x2F;www&#x2F;wordpress
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;mkdir -p&lt;&#x2F;span&gt;&lt;span&gt; bkp
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;source&lt;&#x2F;span&gt;&lt;span&gt; .&#x2F;bin&#x2F;activate
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;python3&lt;&#x2F;span&gt;&lt;span&gt; wx3.py 1221141.wordpress.*.xml&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -o&lt;&#x2F;span&gt;&lt;span&gt; bkp
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span&gt; bkp
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cp -r&lt;&#x2F;span&gt;&lt;span&gt; &#x2F;var&#x2F;www&#x2F;wordpress&#x2F;wp-content .
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span&gt; add .
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span&gt; commit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -m &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;date&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;)&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span&gt; push
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The &lt;code&gt;w3x.py&lt;&#x2F;code&gt; script is an adaption of &lt;a href=&quot;http:&#x2F;&#x2F;https:&#x2F;&#x2F;gist.github.com&#x2F;ruslanosipov&#x2F;b748a138389db2cda1e8&quot;&gt;http:&#x2F;&#x2F;https:&#x2F;&#x2F;gist.github.com&#x2F;ruslanosipov&#x2F;b748a138389db2cda1e8&lt;&#x2F;a&gt;&lt;br &#x2F;&gt;
+Now I need to make a static site with Hugo&#x2F;Jekyll from the raw markdown files&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Thoughts on wordpress</title>
+        <published>2024-01-04T12:53:46+00:00</published>
+        <updated>2024-01-04T12:53:46+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240104125346-thoughts-on-wordpress/"/>
+        <id>https://1221141.github.io/blog/20240104125346-thoughts-on-wordpress/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240104125346-thoughts-on-wordpress/">&lt;p&gt;I have never worked with WordPress before, since I&#x27;ve never felt the need to write anything online and when if finally decided the whole static site generators were the new trend.&lt;br &#x2F;&gt;
+I tend to really like to keep my own data, so I thought it was the best way to keep my notes and thoughts. But since now I&#x27;ve been self-hosting my own applications it felt that might be ok to at least try wordpress. So far I am liking, but I definitely need to find a way to export the posts to markdown for long time storage.&lt;br &#x2F;&gt;
+I&#x27;ve been trying to use the combo {text editor, markdow, git, hugo}, and I really miss something where I can write from my phone.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;my-data&quot;&gt;My Data&lt;&#x2F;h2&gt;
+&lt;p&gt;I want to write and not really spend time tinkering with scripts and renaming stuff. I might need to write another script to export the data from wordpress. But since I am self hosting I can say that the data &lt;strong&gt;is mine&lt;&#x2F;strong&gt; and I can do that in later time.&lt;br &#x2F;&gt;
+I also want to automate some posts creations, since I also want to use this to bookmark some websites that I find interesting.&lt;br &#x2F;&gt;
+Well, time to spend time learning about wordpress, but I guess this will be repetitively easy, since it has been going from a long time and there is a lot of resources online.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

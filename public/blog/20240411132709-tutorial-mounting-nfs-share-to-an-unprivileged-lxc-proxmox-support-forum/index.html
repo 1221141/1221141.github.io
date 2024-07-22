@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  [Tutorial] Mounting NFS share to an unprivileged LXC | Proxmox Support Forum
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/bookmark">&#47;bookmark&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-04-11T13:27:09</strong></p>
+<p><a href="https://forum.proxmox.com/threads/tutorial-mounting-nfs-share-to-an-unprivileged-lxc.138506/">https://forum.proxmox.com/threads/tutorial-mounting-nfs-share-to-an-unprivileged-lxc.138506/</a><br />
+ </p>
+<ol>
+<li>
+<p>Access your nodes shell</p>
+<ol>
+<li><em>Proxmox &gt; Your Node &gt; Shell</em></li>
+</ol>
+</li>
+<li>
+<p>Create a mounting point for the share</p>
+<ol>
+<li><code>mkdir /mnt/computer2/downloads</code></li>
+</ol>
+</li>
+<li>
+<p>Edit <code>fstab</code> so that the share mounts automatically on reboot</p>
+<ol>
+<li>Open: <code>nano /etc/fstab</code></li>
+<li>Add: <code>192.168.1.20:/mnt/user/downloads/ /mnt/computer2/downloads nfs defaults 0 0</code></li>
+<li>Save</li>
+</ol>
+</li>
+<li>
+<p>Mount the share</p>
+<ol>
+<li>Reload systemd: <code>systemctl daemon-reload</code></li>
+<li>Mount shares: <code>mount -a</code></li>
+</ol>
+</li>
+<li>
+<p>Add the pointing point to your LXC</p>
+<ol>
+<li>Open: <code>nano /etc/pve/lxc/101.conf</code></li>
+<li>Add: <code>mp0: /mnt/computer2/downloads/,mp=/downloads</code></li>
+<li>Save</li>
+</ol>
+</li>
+<li>
+<p>Start the LXC</p>
+</li>
+<li>
+<p>Update the LXC user's permissions</p>
+<ol>
+<li>
+<p><code>groupadd -g 10000 lxc_shares</code></p>
+<ol>
+<li>Note: I think you can use whatever group name you want as long as you use again in the next step.</li>
+</ol>
+</li>
+<li>
+<p><code>usermod -aG lxc_shares root</code></p>
+<ol>
+<li>Note: Your username is probably root, but substitute for whatever user you want to configure permissions for.</li>
+</ol>
+</li>
+<li>
+<p>Reboot the LXC</p>
+</li>
+<li>
+<p>Verify permissions</p>
+<ol>
+<li>Create a file in your mountpoint: <code>touch foobar</code></li>
+<li>Attempt to delete <code>foobar</code> from another machine.</li>
+<li>If successful, you should be done.</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

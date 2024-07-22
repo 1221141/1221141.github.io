@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - css</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/css/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-01-06T12:21:37+00:00</updated>
+    <id>https://1221141.github.io/tags/css/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Making the theme mobile friendly</title>
+        <published>2024-01-06T12:21:37+00:00</published>
+        <updated>2024-01-06T12:21:37+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240106122137-making-the-theme-mobile-friendly/"/>
+        <id>https://1221141.github.io/blog/20240106122137-making-the-theme-mobile-friendly/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240106122137-making-the-theme-mobile-friendly/">&lt;p&gt;Since I am using an old theme for my blog, it is not mobile friendly.&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;Spent some time thinking to make the sidebar disappear and the content take the full space when opening in mobile.&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;uploads&#x2F;2024&#x2F;01&#x2F;wp-17045400583254722922824378001443.jpg&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;\&lt;&#x2F;p&gt;
+&lt;p&gt;Now I need to make some fonts bigger.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

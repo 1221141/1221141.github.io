@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - web</title>
+    <link rel="self" type="application/atom+xml" href="https://1221141.github.io/tags/web/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://1221141.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-04-28T17:18:04+00:00</updated>
+    <id>https://1221141.github.io/tags/web/atom.xml</id>
+    <entry xml:lang="en">
+        <title>trying deno fresh</title>
+        <published>2024-04-28T17:18:04+00:00</published>
+        <updated>2024-04-28T17:18:04+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240428171804-trying-deno-fresh/"/>
+        <id>https://1221141.github.io/blog/20240428171804-trying-deno-fresh/</id>
+        
+        <content type="html" xml:base="https://1221141.github.io/blog/20240428171804-trying-deno-fresh/">&lt;p&gt;I saw a video about https:&#x2F;&#x2F;deno.fresh.dev and thought it was interesting. Decided to write a bookmark manager for it.&lt;br &#x2F;&gt;
+I started yesterday and was able to write it in a simple way. The main benefit I see compared with sveltekit is that i don&#x27;t need so many files in order to write the endpoint.&lt;br &#x2F;&gt;
+In sveltekit file routing one needs to have different files for different purposes (.svelte, .server.ts and .page.server.ts, page.ts)&lt;br &#x2F;&gt;
+In fresh you write only tsx files. The controller logic is in a handler function and you also return your javascript from it. using jsx.&lt;br &#x2F;&gt;
+The main selling point of the .svelte file is that you write html and css separately, but in reality nowadays people use inline style with tailwindcss. and the jsx is ok since it is server sided rendered.&lt;br &#x2F;&gt;
+It was a nice experience, but i&#x27;m not sure if well suited for large applications.&lt;br &#x2F;&gt;
+I think i will continue writing this bookmark app in fresh and see how it goes. All files are saved in markdown so it will be easy to migrate to another stack if needed in the future.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

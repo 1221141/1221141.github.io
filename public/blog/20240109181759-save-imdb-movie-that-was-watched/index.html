@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Save IMDB Movie that was watched
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/blogging">&#47;blogging&#47;</a>
+  
+  <a href="/tags/bookmark">&#47;bookmark&#47;</a>
+  
+  <a href="/tags/wordpress">&#47;wordpress&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-09T18:17:59</strong></p>
+<p><strong>bookmarklet</strong></p>
+<pre data-lang="javascript" style="background-color:#2b303b;color:#c0c5ce;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>javascript:(</span><span style="color:#b48ead;">function</span><span>() {
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">poster </span><span>= document.</span><span style="color:#96b5b4;">querySelector</span><span>(&#39;</span><span style="color:#a3be8c;">.ipc-image</span><span>&#39;).</span><span style="color:#bf616a;">srcset</span><span>.</span><span style="color:#96b5b4;">split</span><span>(&#39; &#39;)[</span><span style="color:#d08770;">4</span><span>];
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">title </span><span>= document.title;
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">url </span><span>= [</span><span style="color:#bf616a;">location</span><span>.protocol, &#39;</span><span style="color:#a3be8c;">//</span><span>&#39;, </span><span style="color:#bf616a;">location</span><span>.host, </span><span style="color:#bf616a;">location</span><span>.pathname].</span><span style="color:#96b5b4;">join</span><span>(&#39;&#39;);
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">dateWatched </span><span>= </span><span style="color:#8fa1b3;">prompt</span><span>(&#39;</span><span style="color:#a3be8c;">Enter the date watched (format: YYYY-MM-DD):</span><span>&#39;);
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">body </span><span>= [];
+</span><span>    </span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">push</span><span>(`</span><span style="color:#a3be8c;">&lt;img src=&quot;${</span><span style="color:#bf616a;">poster</span><span style="color:#a3be8c;">}&quot; /&gt;</span><span>`);
+</span><span>    </span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">push</span><span>(&quot;</span><span style="color:#a3be8c;">&lt;br/&gt;</span><span>&quot;);
+</span><span>    </span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">push</span><span>(`</span><span style="color:#a3be8c;">&lt;a href=&quot;${</span><span style="color:#bf616a;">url</span><span style="color:#a3be8c;">}&quot;&gt;${</span><span style="color:#bf616a;">url</span><span style="color:#a3be8c;">}&lt;/a&gt;</span><span>`);
+</span><span>    </span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">push</span><span>(`</span><span style="color:#a3be8c;">&lt;p&gt;Date Watched: ${</span><span style="color:#bf616a;">dateWatched</span><span style="color:#a3be8c;">}&lt;/p&gt;</span><span>`);
+</span><span>    window.</span><span style="color:#96b5b4;">open</span><span>(&#39;</span><span style="color:#a3be8c;">/imdb.php?title=</span><span>&#39;/ + </span><span style="color:#96b5b4;">encodeURIComponent</span><span>(</span><span style="color:#bf616a;">title</span><span>.</span><span style="color:#8fa1b3;">trim</span><span>()) + &#39;</span><span style="color:#a3be8c;">&amp;body=</span><span>&#39; + </span><span style="color:#96b5b4;">encodeURIComponent</span><span>(</span><span style="color:#bf616a;">body</span><span>.</span><span style="color:#96b5b4;">join</span><span>(&#39;</span><span style="color:#96b5b4;">\n</span><span>&#39;).</span><span style="color:#8fa1b3;">trim</span><span>()) + &#39;</span><span style="color:#a3be8c;">&amp;tags=movie,watched,tracking&amp;category=tracking</span><span>&#39;);
+</span><span>})();
+</span></code></pre>
+<p>create a file in the <code>/var/www/wordpress</code> folder e.g.: <code>/var/www/wordpress/imdb.php</code></p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span style="color:#65737e;">// Load WordPress
+</span><span style="color:#96b5b4;">define</span><span>( &#39;</span><span style="color:#a3be8c;">WP_DEBUG</span><span>&#39;, </span><span style="color:#d08770;">true </span><span>);
+</span><span>
+</span><span>
+</span><span style="color:#96b5b4;">define</span><span>( &#39;</span><span style="color:#a3be8c;">WP_DEBUG_DISPLAY</span><span>&#39;, </span><span style="color:#d08770;">false </span><span>);
+</span><span>
+</span><span>
+</span><span style="color:#96b5b4;">define</span><span>( &#39;</span><span style="color:#a3be8c;">WP_DEBUG_LOG</span><span>&#39;, </span><span style="color:#d08770;">true </span><span>);
+</span><span>
+</span><span>
+</span><span style="color:#96b5b4;">define</span><span>(&#39;</span><span style="color:#a3be8c;">WP_USE_THEMES</span><span>&#39;, </span><span style="color:#d08770;">false</span><span>);
+</span><span style="color:#b48ead;">require</span><span>(&#39;</span><span style="color:#a3be8c;">wp-load.php</span><span>&#39;);
+</span><span>
+</span><span>
+</span><span style="color:#65737e;">// Check if title, body, tags, and category are provided in the URL
+</span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#96b5b4;">isset</span><span>($</span><span style="color:#bf616a;">_GET</span><span>[&#39;</span><span style="color:#a3be8c;">title</span><span>&#39;]) &amp;&amp; </span><span style="color:#96b5b4;">isset</span><span>($</span><span style="color:#bf616a;">_GET</span><span>[&#39;</span><span style="color:#a3be8c;">body</span><span>&#39;]) &amp;&amp; </span><span style="color:#96b5b4;">isset</span><span>($</span><span style="color:#bf616a;">_GET</span><span>[&#39;</span><span style="color:#a3be8c;">tags</span><span>&#39;]) &amp;&amp; </span><span style="color:#96b5b4;">isset</span><span>($</span><span style="color:#bf616a;">_GET</span><span>[&#39;</span><span style="color:#a3be8c;">category</span><span>&#39;])) {
+</span><span>    </span><span style="color:#65737e;">// Get values from URL parameters
+</span><span>    $</span><span style="color:#bf616a;">post_title </span><span>= </span><span style="color:#bf616a;">sanitize_text_field</span><span>($</span><span style="color:#bf616a;">_GET</span><span>[&#39;</span><span style="color:#a3be8c;">title</span><span>&#39;]);
+</span><span>    $</span><span style="color:#bf616a;">post_content </span><span>= $</span><span style="color:#bf616a;">_GET</span><span>[&#39;</span><span style="color:#a3be8c;">body</span><span>&#39;];
+</span><span>    $</span><span style="color:#bf616a;">post_tags </span><span>= </span><span style="color:#bf616a;">sanitize_text_field</span><span>($</span><span style="color:#bf616a;">_GET</span><span>[&#39;</span><span style="color:#a3be8c;">tags</span><span>&#39;]);
+</span><span>    $</span><span style="color:#bf616a;">post_category </span><span>= </span><span style="color:#bf616a;">sanitize_text_field</span><span>($</span><span style="color:#bf616a;">_GET</span><span>[&#39;</span><span style="color:#a3be8c;">category</span><span>&#39;]);
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Print the values passed
+</span><span>    </span><span style="color:#96b5b4;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Title: </span><span>&#39; . $</span><span style="color:#bf616a;">post_title </span><span>. &#39;</span><span style="color:#a3be8c;">&lt;br&gt;</span><span>&#39;;
+</span><span>    </span><span style="color:#96b5b4;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Body: </span><span>&#39; . </span><span style="color:#96b5b4;">nl2br</span><span>($</span><span style="color:#bf616a;">post_content</span><span>) . &#39;</span><span style="color:#a3be8c;">&lt;br&gt;</span><span>&#39;; </span><span style="color:#65737e;">// Use nl2br only when displaying
+</span><span>    </span><span style="color:#96b5b4;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Tags: </span><span>&#39; . $</span><span style="color:#bf616a;">post_tags </span><span>. &#39;</span><span style="color:#a3be8c;">&lt;br&gt;</span><span>&#39;;
+</span><span>
+</span><span>
+</span><span>    $</span><span style="color:#bf616a;">tags_array </span><span>= </span><span style="color:#96b5b4;">explode</span><span>(&#39;</span><span style="color:#a3be8c;">,</span><span>&#39;, $</span><span style="color:#bf616a;">post_tags</span><span>);
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// You can also print the array of tags if needed
+</span><span>    </span><span style="color:#96b5b4;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Tags Array: </span><span>&#39;;
+</span><span>    </span><span style="color:#96b5b4;">print_r</span><span>($</span><span style="color:#bf616a;">tags_array</span><span>);
+</span><span>    $</span><span style="color:#bf616a;">category_id </span><span>= </span><span style="color:#bf616a;">get_cat_ID</span><span>($</span><span style="color:#bf616a;">post_category</span><span>);
+</span><span>    </span><span style="color:#b48ead;">if </span><span>($</span><span style="color:#bf616a;">category_id </span><span>== </span><span style="color:#d08770;">0</span><span>) {
+</span><span>        $</span><span style="color:#bf616a;">category_id </span><span>= </span><span style="color:#bf616a;">wp_create_category</span><span>($</span><span style="color:#bf616a;">post_category</span><span>);
+</span><span>    }
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Create the post data array
+</span><span>    $</span><span style="color:#bf616a;">post_data </span><span>= </span><span style="color:#96b5b4;">array</span><span>(
+</span><span>        &#39;</span><span style="color:#a3be8c;">post_title</span><span>&#39;   =&gt; $</span><span style="color:#bf616a;">post_title</span><span>,
+</span><span>        &#39;</span><span style="color:#a3be8c;">post_content</span><span>&#39; =&gt; </span><span style="color:#96b5b4;">nl2br</span><span>($</span><span style="color:#bf616a;">post_content</span><span>),
+</span><span>        &#39;</span><span style="color:#a3be8c;">post_status</span><span>&#39;  =&gt; &#39;</span><span style="color:#a3be8c;">publish</span><span>&#39;,
+</span><span>        &#39;</span><span style="color:#a3be8c;">post_type</span><span>&#39;    =&gt; &#39;</span><span style="color:#a3be8c;">post</span><span>&#39;,
+</span><span>        &#39;</span><span style="color:#a3be8c;">tags_input</span><span>&#39;   =&gt; $</span><span style="color:#bf616a;">tags_array</span><span>,
+</span><span>        &#39;</span><span style="color:#a3be8c;">post_category</span><span>&#39; =&gt; </span><span style="color:#96b5b4;">array</span><span>($</span><span style="color:#bf616a;">category_id</span><span>),
+</span><span>    );
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Insert the post into the database
+</span><span>    $</span><span style="color:#bf616a;">post_id </span><span>= </span><span style="color:#bf616a;">wp_insert_post</span><span>($</span><span style="color:#bf616a;">post_data</span><span>);
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Check if the post was created successfully
+</span><span>    </span><span style="color:#b48ead;">if </span><span>($</span><span style="color:#bf616a;">post_id</span><span>) {
+</span><span>        </span><span style="color:#65737e;">// Redirect to the newly created post
+</span><span>        </span><span style="color:#bf616a;">wp_redirect</span><span>(</span><span style="color:#bf616a;">get_permalink</span><span>($</span><span style="color:#bf616a;">post_id</span><span>));
+</span><span>        </span><span style="color:#b48ead;">exit</span><span>;
+</span><span>    } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Error creating post.</span><span>&#39;;
+</span><span>    }
+</span><span>
+</span><span>
+</span><span>} </span><span style="color:#b48ead;">else </span><span>{
+</span><span>    </span><span style="color:#65737e;">// Display a message if parameters are missing
+</span><span>    </span><span style="color:#96b5b4;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Please provide title, body, tags, and category as URL parameters.</span><span>&#39;;
+</span><span>}
+</span><span style="color:#ab7967;">?&gt;
+</span></code></pre>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

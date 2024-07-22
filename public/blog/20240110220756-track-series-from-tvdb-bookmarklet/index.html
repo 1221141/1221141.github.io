@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Track Series from TVDB Bookmarklet
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/bookmark">&#47;bookmark&#47;</a>
+  
+  <a href="/tags/notes">&#47;notes&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-10T22:07:56</strong></p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>javascript:(function() {
+</span><span>let poster = document.querySelector(&quot;.ipc-image&quot;).srcset.split(&quot; &quot;)[4];
+</span><span>let title = document.title;
+</span><span>let url = [location.protocol, &quot;//&quot;, location.host, location.pathname].join(&quot;&quot;);
+</span><span>let dateWatched = prompt(&quot;Enter the date watched (format: YYYY-MM-DD):&quot;);
+</span><span>let body = [];
+</span><span>body.push(`&lt;img src=&quot;${poster}&quot; /&gt;`);
+</span><span>body.push(&quot;&lt;br/&gt;&quot;);
+</span><span>body.push(`&lt;a href=&quot;${url}&quot;&gt;${url}&lt;/a&gt;`);
+</span><span>body.push(`&lt;p&gt;Date Watched: ${dateWatched}&lt;/p&gt;`);
+</span><span>window.open(
+</span><span>&quot;/imdb.php?title=&quot;/ + encodeURIComponent(title.trim()) +
+</span><span>&quot;&amp;body=&quot; + encodeURIComponent(body.join(&quot;\n&quot;).trim()) +
+</span><span>&quot;&amp;tags=movie,watched,tracking&amp;category=tracking&quot;
+</span><span>);
+</span><span>}();
+</span></code></pre>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

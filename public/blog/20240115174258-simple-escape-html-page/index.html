@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Simple escape html page
+</h1>
+  
+<p class="subtitle"><strong>2024-01-15T17:42:58</strong></p>
+<p>When i want to add code to the WordPress posts I need to escape certain characters, I created a page that does that for me:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>
+</span><span>&lt;!DOCTYPE html&gt;
+</span><span>&lt;html lang=&quot;en&quot;&gt;
+</span><span>&lt;head&gt;
+</span><span>    &lt;meta charset=&quot;UTF-8&quot;&gt;
+</span><span>    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+</span><span>    &lt;title&gt;Code Escaper&lt;/title&gt;
+</span><span>    &lt;link href=&quot;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+</span><span>    &lt;script src=&quot;https://code.jquery.com/jquery-3.6.4.min.js&quot;&gt;&lt;/script&gt;
+</span><span>    &lt;script src=&quot;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+</span><span>&lt;/head&gt;
+</span><span>&lt;body class=&quot;container mt-5&quot;&gt;
+</span><span>
+</span><span>
+</span><span>    &lt;div class=&quot;row&quot;&gt;
+</span><span>        &lt;div class=&quot;col-md-6&quot;&gt;
+</span><span>            &lt;label for=&quot;inputCode&quot;&gt;Input Code:&lt;/label&gt;
+</span><span>            &lt;textarea class=&quot;form-control&quot; id=&quot;inputCode&quot; rows=&quot;10&quot;&gt;&lt;/textarea&gt;
+</span><span>        &lt;/div&gt;
+</span><span>
+</span><span>
+</span><span>        &lt;div class=&quot;col-md-6&quot;&gt;
+</span><span>            &lt;label for=&quot;escapedCode&quot;&gt;Escaped Code:&lt;/label&gt;
+</span><span>            &lt;textarea class=&quot;form-control&quot; id=&quot;escapedCode&quot; rows=&quot;10&quot; readonly&gt;&lt;/textarea&gt;
+</span><span>        &lt;/div&gt;
+</span><span>    &lt;/div&gt;
+</span><span>
+</span><span>
+</span><span>    &lt;div class=&quot;row mt-3&quot;&gt;
+</span><span>        &lt;div class=&quot;col&quot;&gt;
+</span><span>            &lt;button class=&quot;btn btn-primary&quot; onclick=&quot;escapeCode()&quot;&gt;Escape Code&lt;/button&gt;
+</span><span>            &lt;button class=&quot;btn btn-success&quot; onclick=&quot;copyToClipboard()&quot;&gt;Copy to Clipboard&lt;/button&gt;
+</span><span>        &lt;/div&gt;
+</span><span>    &lt;/div&gt;
+</span><span>
+</span><span>
+</span><span>    &lt;script&gt;
+</span><span>        function escapeCode() {
+</span><span>            var inputCode = $(&#39;#inputCode&#39;).val();
+</span><span>            var escapedCode = $(&#39;&lt;div&gt;&#39;).text(inputCode).html();
+</span><span>            $(&#39;#escapedCode&#39;).val(escapedCode);
+</span><span>        }
+</span><span>
+</span><span>
+</span><span>        function copyToClipboard() {
+</span><span>            $(&#39;#escapedCode&#39;).select();
+</span><span>            document.execCommand(&#39;copy&#39;);
+</span><span>            alert(&#39;Code copied to clipboard!&#39;);
+</span><span>        }
+</span><span>    &lt;/script&gt;
+</span><span>
+</span><span>
+</span><span>&lt;/body&gt;
+</span><span>&lt;/html&gt;
+</span></code></pre>
+<p>I added this to the <code>/var/www/wordpress</code> folder. as <code>escape.html</code><br />
+Here is the screenshot:<br />
+<img src="/uploads/2024/01/Screenshot-2024-01-15-17.42.33.png" alt="" /></p>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>1221141/</title>
+  </head>
+
+  <body>
+    <section class="header">
+      <img alt="" src="/berries.jpg"/>
+    </section>
+    <section>
+      <navbar>
+        <a href="/blog">Blog</a>
+        <a href="/bookmark">Bookmark</a>
+        <a href="/about">About</a>
+      </navbar>
+    </section>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Ensure Markdown is the true format of my posts
+</h1>
+  
+
+<section class="tags">
+  
+  
+  <a href="/tags/notes">&#47;notes&#47;</a>
+  
+</section>
+
+<p class="subtitle"><strong>2024-01-11T09:55:00</strong></p>
+<p>While I am enjoying playing with WordPress I need to be careful that I always have a markdown backup in place.<br />
+I created my python script to do that but the cronjob is not working... might need to write a php one and hookup in WordPress core as a plugin to always create the backup when I create/update a post/page.<br />
+<del>I can use Parsedown to convert html to markdown, might investigate that.</del> Parsdown is only from md -&gt; html. I found this library <code>league/html-to-markdown</code> but no success in importing it and using.<br />
+☝️following this, I can save the fields I want in JSON. Then I can pipeline tinot another project to transform to markdown. I found that JavaScript ecosystem seems more healthy with html/markdown parsing tools.<br />
+I will try write some js code with <code>rehype-remark</code>.\</p>
+<hr />
+<p><br />
+New Plan:<br />
+If i need to write code, I use the markdown editor, if not I can use the classical editor.<br />
+Now I need to find a way to parse the html, but I can do that later.<br />
+Sure, would be better if the editor was in markdown to begin with, but the plugins are clunky. I think it is better to stay in html. If I have time I can write my own parser. I will investigate the unify hast\</p>
+<hr />
+<p><br />
+[2024-01-19] New solution here: <a href="/">Parse/ WordPress to Markdown</a></p>
+
+
+      </div>
+    </section>
+  </body>
+
+</html>
