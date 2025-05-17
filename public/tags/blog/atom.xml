@@ -32,9 +32,9 @@
 &lt;p&gt;\&lt;&#x2F;p&gt;
 &lt;p&gt;Comparison with original Samsung Buds&lt;&#x2F;p&gt;
 &lt;p&gt;\&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;img src=&quot;&#x2F;uploads&#x2F;2024&#x2F;07&#x2F;wp-17206970746244782488630270248023-300x225.jpg&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;1221141.github.io&#x2F;blog&#x2F;20240711122525-bought-new-earbuds-jlab-jbuds-mini&#x2F;.&#x2F;uploads&#x2F;2024&#x2F;07&#x2F;wp-17206970746244782488630270248023-300x225.jpg&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;\&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;img src=&quot;&#x2F;uploads&#x2F;2024&#x2F;07&#x2F;wp-1720697040580972866411977577700-300x225.jpg&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;1221141.github.io&#x2F;blog&#x2F;20240711122525-bought-new-earbuds-jlab-jbuds-mini&#x2F;.&#x2F;uploads&#x2F;2024&#x2F;07&#x2F;wp-1720697040580972866411977577700-300x225.jpg&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 </content>
         
     </entry>
@@ -77,7 +77,7 @@ I think the whole saga was worth it. I learned that I like concave shape, orthol
         <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/"/>
         <id>https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/</id>
         
-        <content type="html" xml:base="https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/">&lt;p&gt;I already expressed my attempts to use wordpress but save a backup of the website in markdown (at least the posts) here &lt;a href=&quot;&#x2F;&quot;&gt;Managed&#x2F; to make a markdown backup from wordpress&lt;&#x2F;a&gt;, and here &lt;a href=&quot;&#x2F;&quot;&gt;Ensure&#x2F; Markdown is the true format of my posts&lt;&#x2F;a&gt;.&lt;br &#x2F;&gt;
+        <content type="html" xml:base="https://1221141.github.io/blog/20240119095844-parse-wordpress-to-markdown/">&lt;p&gt;I already expressed my attempts to use wordpress but save a backup of the website in markdown (at least the posts) here &lt;a href=&quot;https:&#x2F;&#x2F;1221141.github.io&#x2F;blog&#x2F;20240119095844-parse-wordpress-to-markdown&#x2F;.&#x2F;.md&quot;&gt;Managed&#x2F; to make a markdown backup from wordpress&lt;&#x2F;a&gt;, and here &lt;a href=&quot;https:&#x2F;&#x2F;1221141.github.io&#x2F;blog&#x2F;20240119095844-parse-wordpress-to-markdown&#x2F;.&#x2F;.md&quot;&gt;Ensure&#x2F; Markdown is the true format of my posts&lt;&#x2F;a&gt;.&lt;br &#x2F;&gt;
 I believe I found the best way to achieve that. The backup is done in two stages.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;first-step&quot;&gt;First step&lt;&#x2F;h2&gt;
 &lt;p&gt;Create a backup in json. For this I wrote a python script that reads from the database and saves the dates, slugs, tags and content in a json. The content still in html.&lt;&#x2F;p&gt;
