@@ -230,7 +230,7 @@
         <link rel="alternate" type="text/html" href="https://1221141.github.io/blog/20240106164204-save-bookmark-page-to-wordpress/"/>
         <id>https://1221141.github.io/blog/20240106164204-save-bookmark-page-to-wordpress/</id>
         
-        <content type="html" xml:base="https://1221141.github.io/blog/20240106164204-save-bookmark-page-to-wordpress/">&lt;p&gt;As a continuation of the what I wrote here: &lt;a href=&quot;https:&#x2F;&#x2F;1221141.github.io&#x2F;blog&#x2F;20240106164204-save-bookmark-page-to-wordpress&#x2F;20240105114834_create-a-worpress-post-with-a-javascript-bookmarklet.md&quot;&gt;Create&#x2F; a worpress post with a javascript bookmarklet&lt;&#x2F;a&gt; I created a bookmark&lt;strong&gt;let&lt;&#x2F;strong&gt; to create bookmarks.&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://1221141.github.io/blog/20240106164204-save-bookmark-page-to-wordpress/">&lt;p&gt;As a continuation of the what I wrote here: &lt;a href=&quot;&#x2F;20240105114834_create-a-worpress-post-with-a-javascript-bookmarklet&quot;&gt;Create&#x2F; a worpress post with a javascript bookmarklet&lt;&#x2F;a&gt; I created a bookmark&lt;strong&gt;let&lt;&#x2F;strong&gt; to create bookmarks.&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;javascript: (function() {
 &lt;&#x2F;span&gt;&lt;span&gt;    var title = document.title;
